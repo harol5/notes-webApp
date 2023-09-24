@@ -3,12 +3,14 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
 const cookieParser = require("cookie-parser");
 const { logger } = require("./middleware/logEvents");
+const errorHandler = require("./middleware/errorHandler");
 const verifyJWT = require("./middleware/verifyJWT");
 const port = process.env.PORT || 4500;
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
@@ -22,6 +24,8 @@ app.use("/refresh", require("./routers/refreshToken"));
 
 app.use(verifyJWT);
 app.get("/checkAuth", (req, res) => res.send("protected route reached"));
+
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`server listen on port: ${port}`);
