@@ -14,17 +14,18 @@ const refreshTokenHandler = async (req, res) => {
   if (!foundUser) return res.sendStatus(403); //forbidden.
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err || foundUser.username !== decoded.username)
+    if (err || foundUser.username !== decoded.UserInfo.username)
       return res.sendStatus(403);
 
     const accessToken = jwt.sign(
       {
         UserInfo: {
-          username: decoded.username,
+          userId: decoded.UserInfo.userId,
+          username: decoded.UserInfo.username,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30S" }
+      { expiresIn: "3600s" }
     );
     res.json({ accessToken });
   });

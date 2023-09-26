@@ -10,8 +10,9 @@ const verifyJWT = (req, res, next) => {
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) return res.sendStatus(403); //invalid token.
 
-    // if not error, this middleware adds to properties to the req object -
+    //if not error, this middleware adds properties to the req object -
     //so the next middleware can use it.
+    req.userId = decoded.UserInfo.userId;
     req.user = decoded.UserInfo.username;
     next();
   });

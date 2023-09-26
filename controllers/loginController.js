@@ -13,6 +13,7 @@ const loginHandler = async (req, res) => {
     const accessToken = jwt.sign(
       {
         UserInfo: {
+          userId: foundUser.id,
           username: foundUser.username,
         },
       },
@@ -20,7 +21,12 @@ const loginHandler = async (req, res) => {
       { expiresIn: "30s" }
     );
     const refreshToken = jwt.sign(
-      { username: foundUser.username },
+      {
+        UserInfo: {
+          userId: foundUser.id,
+          username: foundUser.username,
+        },
+      },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "3600s" }
     );
