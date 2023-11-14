@@ -1,13 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import "./index.css";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import Dashboard from "./dashboard/Dashboard";
+import reportWebVitals from "./reportWebVitals";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvider } from "./context/AuthProvider";
+import RequireAuth from "./utils/RequireAuth";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    element: <RequireAuth />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+    ],
+  },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
 

@@ -8,7 +8,7 @@ import {
 } from "../utils/inputValidations";
 import "../styles/form.css";
 
-function CreateAccount() {
+function Signup() {
   const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit((data) => {
     console.log(data);
@@ -32,4 +32,4 @@ function CreateAccount() {
   );
 }
 
-export default CreateAccount;
+export default Signup;

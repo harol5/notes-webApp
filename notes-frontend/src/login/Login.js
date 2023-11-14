@@ -1,19 +1,40 @@
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
 import Input from "../common/InputForm";
-import axios from "axios";
+import axios from "../api/axios";
 import {
   usernameValidation,
   passwordLoginValidation,
 } from "../utils/inputValidations";
 import "../styles/form.css";
 
-function CreateAccount() {
+function Login() {
+  const { setAuth } = useAuth();
+  const [errMsg, setErrMsg] = useState("");
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/dashboard";
+  console.log(from);
+  const navigate = useNavigate();
+
   const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit((data) => {
     axios
-      .post("http://localhost:4500/login", data)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .post("/login", data, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setAuth({ code: res.data.accessToken });
+        navigate(from, { replace: true, state: "this is a test" });
+      })
+      .catch((err) => {
+        if (!err?.response) setErrMsg("No Server Response");
+        else if (err.response?.status >= 400)
+          setErrMsg("Missing Username or Password");
+        else console.log(err);
+      });
     methods.reset();
   });
 
@@ -24,10 +45,12 @@ function CreateAccount() {
 
         <Input {...passwordLoginValidation} />
 
+        {errMsg && <h1>{errMsg}</h1>}
+
         <button onClick={onSubmit}>Login</button>
       </form>
     </FormProvider>
   );
 }
 
-export default CreateAccount;
+export default Login;

@@ -6,7 +6,7 @@ import { useState } from "react";
 function App() {
   const [isSignUpActive, setIsSignUpActive] = useState(false);
   return (
-    <main>
+    <>
       <section className="call-to-action">
         <h1>Why keeping everything in your mind when you can use</h1>
         <span>NOTES</span>
@@ -32,7 +32,7 @@ function App() {
           </p>
         )}
       </section>
-    </main>
+    </>
   );
 }
 
