@@ -15,7 +15,6 @@ function Login() {
   const [errMsg, setErrMsg] = useState("");
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
-  console.log(from);
   const navigate = useNavigate();
 
   const methods = useForm({ mode: "onTouched" });
@@ -42,11 +41,8 @@ function Login() {
     <FormProvider {...methods}>
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">
         <Input {...usernameValidation} />
-
         <Input {...passwordLoginValidation} />
-
         {errMsg && <h1>{errMsg}</h1>}
-
         <button onClick={onSubmit}>Login</button>
       </form>
     </FormProvider>
