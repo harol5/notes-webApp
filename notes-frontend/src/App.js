@@ -8,8 +8,10 @@ function App() {
   return (
     <>
       <section className="call-to-action">
-        <h1>Why keeping everything in your mind when you can use</h1>
-        <span>NOTES</span>
+        <h1>
+          Why keeping everything in your mind when you can use:{" "}
+          <span>NOTES</span>
+        </h1>
         <p>
           Create, save, delete and edit all your notes, but not only that, you
           can categorize them by TODO or REMINDER, and search for words in all

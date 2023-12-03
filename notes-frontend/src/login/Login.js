@@ -11,7 +11,7 @@ import {
 import "../styles/form.css";
 
 function Login() {
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const [errMsg, setErrMsg] = useState("");
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
@@ -36,7 +36,8 @@ function Login() {
       });
     methods.reset();
   });
-
+  console.log(auth?.code);
+  console.log(auth?.code ? "passed" : "not");
   return (
     <FormProvider {...methods}>
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">

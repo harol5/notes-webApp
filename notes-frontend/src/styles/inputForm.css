@@ -1,0 +1,28 @@
+.input-container {
+  display: flex;
+  flex-direction: column;
+  /* margin-bottom: 1.5em; */
+}
+
+.input-container label {
+  color: var(--theme-color-1);
+  margin: 0.5em 0;
+}
+
+.input-container label h1::before {
+  background-color: var(--theme-color-7);
+  content: "";
+  position: absolute;
+  width: 4em;
+  height: 2.4%;
+  transform: rotate(-2deg);
+}
+
+.input-container input {
+  background-color: var(--theme-color-8);
+  padding: 0.7em 0;
+}
+
+.error {
+  color: red;
+}

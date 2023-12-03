@@ -1,17 +1,44 @@
-.form-container {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-}
-
+/*/================Main Page=============/*/
 .call-to-action {
+  grid-column: 2/3;
   width: 50%;
   padding: 2em;
-  margin: 0 6em;
+}
+.call-to-action h1 {
+  font-size: 3em;
+  color: var(--theme-color-3);
+  line-height: 1.2;
+}
+.call-to-action p {
+  font-size: 1.3em;
+  margin-top: 1em;
+  line-height: 1.5;
+}
+/*--adds higlight effect to "notes" word---*/
+.call-to-action h1 span::before {
+  background-color: var(--theme-color-4);
+  content: "";
+  position: absolute;
+  width: 3.3em;
+  height: 5%;
+  z-index: -1;
+  transform: rotate(-2deg);
 }
 
-main {
+/* .call-to-action span {
+  background-color: #46b96c;
+  position: absolute;
+  width: 3.3em;
+  height: 5%;
+  z-index: -1;
+  transform: rotate(-2deg);
+} */
+/*------------------------------------*/
+.form-container {
+  grid-column: 2/3;
   display: flex;
-  height: 100vh;
+  flex-direction: column;
   align-items: center;
+  width: 50%;
+  row-gap: 30px;
 }

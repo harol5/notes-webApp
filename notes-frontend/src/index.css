@@ -1,4 +1,32 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+:root {
+  --theme-color-1: rgb(15, 15, 15);
+  --theme-color-2: rgb(173, 173, 173);
+  --theme-color-3: rgb(196, 252, 252);
+  --theme-color-4: #46b96c;
+  --theme-color-5: rgb(201, 201, 201);
+  --theme-color-6: rgb(72, 72, 72);
+  --theme-color-7: #00ff804b;
+  --theme-color-8: rgb(152, 152, 152);
+  --theme-color-9: rgb(255, 134, 134);
+}
+
 body {
-  background-color: rgb(28, 28, 28);
-  color: azure;
+  font-family: "Josefin Slab", serif;
+  background-color: var(--theme-color-1);
+  color: var(--theme-color-2);
+  display: grid;
+  grid-template-columns: auto 1020px auto;
+}
+
+main {
+  grid-column: 2/3;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: flex-start;
 }
