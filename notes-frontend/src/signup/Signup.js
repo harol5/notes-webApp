@@ -8,7 +8,7 @@ import {
 } from "../utils/inputValidations";
 import "../styles/form.css";
 
-function Signup() {
+function Signup({ setIsSignUpActive }) {
   const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit((data) => {
     console.log(data);
@@ -28,6 +28,10 @@ function Signup() {
 
         <button onClick={onSubmit}>Create Account</button>
       </form>
+      <p>
+        Dont have an Account?{" "}
+        <button onClick={() => setIsSignUpActive(false)}>SIGN UP!</button>
+      </p>
     </FormProvider>
   );
 }

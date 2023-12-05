@@ -1,14 +1,21 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useLogout from "../hooks/useLogout";
 import { useEffect, useState } from "react";
 import Card from "../common/Card";
 import "../styles/dashboard.css";
+import useAuth from "../hooks/useAuth";
 
 function Dashboard() {
   const axiosPrivate = useAxiosPrivate();
+  const logout = useLogout();
   const navigate = useNavigate();
   const location = useLocation();
   const [notes, setNotes] = useState([]);
+  const { auth } = useAuth();
+
+  console.log(location);
+  console.log(auth);
 
   useEffect(() => {
     let isMounted = true;
@@ -26,6 +33,7 @@ function Dashboard() {
       }
     };
     getNotes();
+    console.log("dashboard useEffect ran!!");
 
     return () => {
       isMounted = false;
@@ -33,17 +41,15 @@ function Dashboard() {
     };
   }, []);
 
-  const logout = async () => {
+  const signOut = async () => {
     try {
-      const response = await axiosPrivate.get("/logout");
-      console.log(response);
-      navigate("/", { state: { from: location }, replace: true });
+      await logout();
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(notes);
   return (
     <section className="dashboard-container">
       <header>
@@ -62,7 +68,7 @@ function Dashboard() {
             <button>Add note</button>
           </li>
         </ul>
-        <button onClick={logout}>log out</button>
+        <button onClick={signOut}>log out</button>
       </header>
       <section className="notes-container">
         {notes.map((note) => (

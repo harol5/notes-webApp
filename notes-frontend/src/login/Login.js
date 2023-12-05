@@ -10,13 +10,16 @@ import {
 } from "../utils/inputValidations";
 import "../styles/form.css";
 
-function Login() {
-  const { auth, setAuth } = useAuth();
-  const [errMsg, setErrMsg] = useState("");
+function Login({ setIsSignUpActive }) {
+  const { setAuth } = useAuth();
+
+  //Utils for re-route after.
+  const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
-  const navigate = useNavigate();
 
+  //Utils for form functionality.
+  const [errMsg, setErrMsg] = useState("");
   const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit((data) => {
     axios
@@ -36,8 +39,7 @@ function Login() {
       });
     methods.reset();
   });
-  console.log(auth?.code);
-  console.log(auth?.code ? "passed" : "not");
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">
@@ -46,6 +48,10 @@ function Login() {
         {errMsg && <h1>{errMsg}</h1>}
         <button onClick={onSubmit}>Login</button>
       </form>
+      <p>
+        Dont have an Account?{" "}
+        <button onClick={() => setIsSignUpActive(true)}>SIGN UP!</button>
+      </p>
     </FormProvider>
   );
 }

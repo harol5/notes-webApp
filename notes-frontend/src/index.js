@@ -7,18 +7,25 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import RequireAuth from "./utils/RequireAuth";
+import PersistLogin from "./utils/PersistLogin";
 
+console.log(window);
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
-  },
-  {
-    element: <RequireAuth />,
+    element: <PersistLogin />,
     children: [
       {
-        path: "/dashboard",
-        element: <Dashboard />,
+        path: "/",
+        element: <App />,
+      },
+      {
+        element: <RequireAuth />,
+        children: [
+          {
+            path: "/dashboard",
+            element: <Dashboard />,
+          },
+        ],
       },
     ],
   },

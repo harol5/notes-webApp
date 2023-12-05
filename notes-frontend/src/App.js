@@ -2,10 +2,18 @@ import "./App.css";
 import Signup from "./signup/Signup";
 import Login from "./login/Login";
 import { useState } from "react";
+import useAuth from "./hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 function App() {
   const [isSignUpActive, setIsSignUpActive] = useState(false);
-  return (
+  const { auth } = useAuth();
+
+  console.log("root ", auth);
+
+  return auth?.code ? (
+    <Navigate to="/dashboard" replace />
+  ) : (
     <>
       <section className="call-to-action">
         <h1>
@@ -19,20 +27,8 @@ function App() {
         </p>
       </section>
       <section className="form-container">
-        {!isSignUpActive && <Login />}
-        {!isSignUpActive && (
-          <p>
-            Dont have an Account?{" "}
-            <button onClick={() => setIsSignUpActive(true)}>SIGN UP!</button>
-          </p>
-        )}
-        {isSignUpActive && <Signup />}
-        {isSignUpActive && (
-          <p>
-            Already have an Account?{" "}
-            <button onClick={() => setIsSignUpActive(false)}>Login!</button>
-          </p>
-        )}
+        {!isSignUpActive && <Login setIsSignUpActive={setIsSignUpActive} />}
+        {isSignUpActive && <Signup setIsSignUpActive={setIsSignUpActive} />}
       </section>
     </>
   );

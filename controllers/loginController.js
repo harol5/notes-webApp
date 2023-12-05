@@ -28,7 +28,7 @@ const loginHandler = async (req, res) => {
         },
       },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "3600s" }
+      { expiresIn: "1d" }
     );
 
     await users.updateUser("refresh_token", refreshToken, username);

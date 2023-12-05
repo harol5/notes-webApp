@@ -9,7 +9,6 @@ const refreshTokenHandler = async (req, res) => {
   // Is refreshToken in DB?
   const refreshToken = cookies.jwt;
   const foundUser = await users.getUserByRefreshToken(refreshToken);
-  console.log(foundUser);
 
   if (!foundUser) return res.sendStatus(403); //forbidden.
 
