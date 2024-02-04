@@ -9,7 +9,6 @@ import { AuthProvider } from "./context/AuthProvider";
 import RequireAuth from "./utils/RequireAuth";
 import PersistLogin from "./utils/PersistLogin";
 
-console.log(window);
 const router = createBrowserRouter([
   {
     element: <PersistLogin />,

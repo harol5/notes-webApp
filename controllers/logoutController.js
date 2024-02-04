@@ -15,7 +15,7 @@ const logoutHandler = async (req, res) => {
     return res.sendStatus(204);
   }
 
-  await users.updateUser("refresh_token", null, foundUser.username);
+  await users.updateUser("refresh_token", "", foundUser.username);
   // add in production flag "secure:true". only will serve in https
   res.clearCookie("jwt", { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
   res.sendStatus(204);

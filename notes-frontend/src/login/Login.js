@@ -30,6 +30,7 @@ function Login({ setIsSignUpActive }) {
       .then((res) => {
         setAuth({ code: res.data.accessToken });
         navigate(from, { replace: true, state: "this is a test" });
+        console.log("Login: axios res ok, setauth and navigate called!");
       })
       .catch((err) => {
         if (!err?.response) setErrMsg("No Server Response");

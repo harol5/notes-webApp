@@ -4,18 +4,12 @@ import useLogout from "../hooks/useLogout";
 import { useEffect, useState } from "react";
 import Card from "../common/Card";
 import "../styles/dashboard.css";
-import useAuth from "../hooks/useAuth";
 
 function Dashboard() {
   const axiosPrivate = useAxiosPrivate();
   const logout = useLogout();
   const navigate = useNavigate();
-  const location = useLocation();
   const [notes, setNotes] = useState([]);
-  const { auth } = useAuth();
-
-  console.log(location);
-  console.log(auth);
 
   useEffect(() => {
     let isMounted = true;
@@ -28,12 +22,10 @@ function Dashboard() {
         });
         isMounted && setNotes(response.data);
       } catch (err) {
-        console.log(err);
-        navigate("/", { state: { from: location }, replace: true });
+        console.log(err.response.status);
       }
     };
     getNotes();
-    console.log("dashboard useEffect ran!!");
 
     return () => {
       isMounted = false;
