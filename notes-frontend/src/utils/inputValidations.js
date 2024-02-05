@@ -83,3 +83,50 @@ export const passwordLoginValidation = {
     },
   },
 };
+
+export const titleNoteValidation = {
+  label: "Note Title",
+  type: "text",
+  id: "title",
+  validation: {
+    required: {
+      value: true,
+      message: "required",
+    },
+    maxLength: {
+      value: 50,
+      message: "50 characters max",
+    },
+  },
+};
+
+export const categoryNoteValidation = {
+  label: "todo",
+  type: "radio",
+  id: "category",
+  validation: {
+    required: {
+      value: true,
+      message: "required",
+    },
+    maxLength: {
+      value: 50,
+      message: "50 characters max",
+    },
+  },
+};
+
+export const contentNoteValidation = {
+  label: "Note Content",
+  id: "content",
+  validation: {
+    required: {
+      value: true,
+      message: "required",
+    },
+    maxLength: {
+      value: 250,
+      message: "250 characters max",
+    },
+  },
+};

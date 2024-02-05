@@ -3,6 +3,7 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useLogout from "../hooks/useLogout";
 import { useEffect, useState } from "react";
 import Card from "../common/Card";
+import NoteModal from "../common/NoteModal";
 import "../styles/dashboard.css";
 
 function Dashboard() {
@@ -42,22 +43,27 @@ function Dashboard() {
     }
   };
 
+  let [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const addNote = () => {
+    console.log("note added");
+  };
+
   return (
     <section className="dashboard-container">
       <header>
-        <h1>dashboard</h1>
+        <h1>settings</h1>
         <ul>
           <li>
-            <button>opction 1</button>
-          </li>
-          <li>
-            <button>opction 2</button>
-          </li>
-          <li>
-            <button>opction 3</button>
-          </li>
-          <li>
-            <button>Add note</button>
+            <button onClick={openModal}>Add note</button>
           </li>
         </ul>
         <button onClick={signOut}>log out</button>
@@ -67,6 +73,7 @@ function Dashboard() {
           <Card key={note.id} data={note} />
         ))}
       </section>
+      <NoteModal isOpen={isOpen} closeModal={closeModal} />
     </section>
   );
 }
