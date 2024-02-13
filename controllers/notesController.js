@@ -12,7 +12,7 @@ const createNoteHandler = async (req, res) => {
   const newNote = { ...req.body, dateCreated: currentDate, userId: req.userId };
   try {
     await Notes.createNote(newNote);
-    res.sendStatus(201);
+    res.status(201).json(newNote);
   } catch (err) {
     return res.status(500).json({ message: err.toString() });
   }

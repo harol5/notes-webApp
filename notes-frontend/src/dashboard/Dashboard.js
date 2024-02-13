@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useLogout from "../hooks/useLogout";
 import { useEffect, useState } from "react";
@@ -11,6 +11,8 @@ function Dashboard() {
   const logout = useLogout();
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
+  const [newNote, setNewNote] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -21,6 +23,7 @@ function Dashboard() {
         const response = await axiosPrivate.get("/notes", {
           signal: controller.signal,
         });
+        console.log(response);
         isMounted && setNotes(response.data);
       } catch (err) {
         console.log(err.response.status);
@@ -32,7 +35,7 @@ function Dashboard() {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  }, [newNote]);
 
   const signOut = async () => {
     try {
@@ -43,18 +46,12 @@ function Dashboard() {
     }
   };
 
-  let [isOpen, setIsOpen] = useState(false);
-
   const openModal = () => {
     setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
-  };
-
-  const addNote = () => {
-    console.log("note added");
   };
 
   return (
@@ -73,7 +70,11 @@ function Dashboard() {
           <Card key={note.id} data={note} />
         ))}
       </section>
-      <NoteModal isOpen={isOpen} closeModal={closeModal} />
+      <NoteModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        setNewNote={setNewNote}
+      />
     </section>
   );
 }

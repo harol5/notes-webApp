@@ -1,17 +1,36 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Input from "../common/InputForm";
 import Textarea from "./TextareaForm";
+import RadioInput from "./RadioInput";
+import Fieldset from "./Fieldset";
 import {
   titleNoteValidation,
   contentNoteValidation,
+  categoryTodoNoteValidation,
+  categoryReminderNoteValidation,
 } from "../utils/inputValidations";
 
-function NoteModal({ isOpen, closeModal }) {
+function NoteModal({ isOpen, closeModal, setNewNote }) {
+  const axiosPrivate = useAxiosPrivate();
   const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit((data) => {
     console.log(data);
+
+    const addNotes = async () => {
+      try {
+        const newNote = await axiosPrivate.post("/notes", data);
+        setNewNote((prev) => {
+          return [...prev, newNote.data];
+        });
+      } catch (err) {
+        console.log(err.response.status);
+      }
+    };
+    addNotes();
+
     closeModal();
     methods.reset();
   });
@@ -55,6 +74,10 @@ function NoteModal({ isOpen, closeModal }) {
                       <form onSubmit={(e) => e.preventDefault()} noValidate>
                         <Input {...titleNoteValidation} />
                         <Textarea {...contentNoteValidation} />
+                        <Fieldset>
+                          <RadioInput {...categoryReminderNoteValidation} />
+                          <RadioInput {...categoryTodoNoteValidation} />
+                        </Fieldset>
                       </form>
                     </FormProvider>
                   </span>

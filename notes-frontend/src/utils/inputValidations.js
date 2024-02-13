@@ -100,18 +100,28 @@ export const titleNoteValidation = {
   },
 };
 
-export const categoryNoteValidation = {
+export const categoryTodoNoteValidation = {
   label: "todo",
   type: "radio",
-  id: "category",
+  id: "todo",
+  name: "category",
   validation: {
     required: {
       value: true,
       message: "required",
     },
-    maxLength: {
-      value: 50,
-      message: "50 characters max",
+  },
+};
+
+export const categoryReminderNoteValidation = {
+  label: "reminder",
+  type: "radio",
+  id: "reminder",
+  name: "category",
+  validation: {
+    required: {
+      value: true,
+      message: "required",
     },
   },
 };

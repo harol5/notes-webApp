@@ -18,7 +18,9 @@
 /*---------------------------*/
 .notes-container {
   display: flex;
-  column-gap: 1em;
+  justify-content: center;
+  gap: 1em;
+  flex-wrap: wrap;
 }
 .card {
   padding: 1em;
