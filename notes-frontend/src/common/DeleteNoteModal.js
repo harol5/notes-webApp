@@ -1,38 +1,19 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { FormProvider, useForm } from "react-hook-form";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import Input from "../common/InputForm";
-import Textarea from "./TextareaForm";
-import RadioInput from "./RadioInput";
-import Fieldset from "./Fieldset";
-import {
-  titleNoteValidation,
-  contentNoteValidation,
-  categoryTodoNoteValidation,
-  categoryReminderNoteValidation,
-} from "../utils/inputValidations";
 
-function NoteModal({ isOpen, closeModal, setNewNote }) {
+function DeleteNoteModal({ isOpen, noteId, closeModal, notes, setNotes }) {
   const axiosPrivate = useAxiosPrivate();
-  const methods = useForm({ mode: "onChange" });
-  const onSubmit = methods.handleSubmit((data) => {
-    const addNotes = async () => {
-      try {
-        const newNote = await axiosPrivate.post("/notes", data);
-        setNewNote((prev) => {
-          return [...prev, newNote.data];
-        });
-      } catch (err) {
-        console.log(err.response.status);
-      }
-    };
-    addNotes();
-
-    closeModal();
-    methods.reset();
-  });
-
+  const deleteNote = async () => {
+    try {
+      await axiosPrivate.delete(`/notes/${noteId}`);
+      const updatedNotes = notes.filter((note) => note.id !== noteId);
+      setNotes(updatedNotes);
+      closeModal();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -64,30 +45,28 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  New Note
+                  Are you sure you want to delte this note?
                 </Dialog.Title>
                 <div className="mt-2">
-                  <span className="text-sm text-gray-500">
-                    <FormProvider {...methods}>
-                      <form onSubmit={(e) => e.preventDefault()} noValidate>
-                        <Input {...titleNoteValidation} />
-                        <Textarea {...contentNoteValidation} />
-                        <Fieldset>
-                          <RadioInput {...categoryReminderNoteValidation} />
-                          <RadioInput {...categoryTodoNoteValidation} />
-                        </Fieldset>
-                      </form>
-                    </FormProvider>
-                  </span>
+                  <span className="text-sm text-gray-500"></span>
                 </div>
 
                 <div className="mt-4">
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={onSubmit}
+                    onClick={closeModal}
                   >
-                    Create Note
+                    Cancel
+                  </button>
+                </div>
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    onClick={deleteNote}
+                  >
+                    Confirm
                   </button>
                 </div>
               </Dialog.Panel>
@@ -99,4 +78,4 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
   );
 }
 
-export default NoteModal;
+export default DeleteNoteModal;
