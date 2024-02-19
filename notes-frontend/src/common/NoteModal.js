@@ -17,12 +17,15 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
   const axiosPrivate = useAxiosPrivate();
   const methods = useForm({ mode: "onChange" });
   const onSubmit = methods.handleSubmit((data) => {
+    const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
+    const updatedNote = { ...data, dateCreated: currentDate };
+    console.log(updatedNote);
+
     const addNotes = async () => {
       try {
-        const newNote = await axiosPrivate.post("/notes", data);
-        setNewNote((prev) => {
-          return [...prev, newNote.data];
-        });
+        const newNote = await axiosPrivate.post("/notes", updatedNote);
+        setNewNote(newNote.data);
+        console.log(newNote);
       } catch (err) {
         console.log(err.response.status);
       }

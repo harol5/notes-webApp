@@ -20,7 +20,8 @@
 }
 
 body {
-  font-family: "Josefin Slab", serif;
+  /* font-family: "Josefin Slab", serif; */
+  font-family: monospace;
   background-color: var(--theme-color-1);
   color: var(--theme-color-2);
   display: grid;

@@ -8,8 +8,9 @@ const getAllNotesByUserIdHandler = async (req, res) => {
 };
 
 const createNoteHandler = async (req, res) => {
-  const currentDate = new Date().toISOString().split("T")[0];
-  const newNote = { ...req.body, dateCreated: currentDate, userId: req.userId };
+  // const currentDate = new Date().toISOString().split("T")[0];
+  const newNote = { ...req.body, userId: req.userId };
+  console.log(newNote);
   try {
     await Notes.createNote(newNote);
     res.status(201).json(newNote);

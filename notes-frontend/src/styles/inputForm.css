@@ -27,6 +27,10 @@
   color: red;
 }
 
+.success {
+  color: rgb(26, 255, 0);
+}
+
 .textare-container {
   display: flex;
   flex-direction: column;
@@ -44,4 +48,8 @@
   width: 4em;
   height: 2.4%;
   transform: rotate(-2deg);
+}
+
+.warnning:hover {
+  color: rgb(255, 106, 0);
 }

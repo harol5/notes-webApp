@@ -51,7 +51,9 @@ function Login({ setIsSignUpActive }) {
       </form>
       <p>
         Dont have an Account?{" "}
-        <button onClick={() => setIsSignUpActive(true)}>SIGN UP!</button>
+        <button className="warnning" onClick={() => setIsSignUpActive(true)}>
+          SIGN UP!
+        </button>
       </p>
     </FormProvider>
   );

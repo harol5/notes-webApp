@@ -6,16 +6,20 @@ import Card from "../common/Card";
 import NoteModal from "../common/NoteModal";
 import "../styles/dashboard.css";
 import DeleteNoteModal from "../common/DeleteNoteModal";
+import EditNoteModal from "../common/EditNoteModal";
 
 function Dashboard() {
   const axiosPrivate = useAxiosPrivate();
   const logout = useLogout();
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState([]);
+  const [newNote, setNewNote] = useState({});
+  const [updatedNote, setUpdatedNewNote] = useState({});
+  const [deletedNoteId, setNoteId] = useState();
   const [isOpenAddNoteModal, setIsOpenAddNoteModal] = useState(false);
   const [isOpenDeleteNoteModal, setIsOpenDeleteNoteModal] = useState(false);
-  const [noteId, setNoteId] = useState();
+  const [isOpenEditNoteModal, setIsOpenEditNoteModal] = useState(false);
+  const [editNote, setEditNote] = useState();
 
   useEffect(() => {
     let isMounted = true;
@@ -37,7 +41,7 @@ function Dashboard() {
       isMounted = false;
       controller.abort();
     };
-  }, [newNote]);
+  }, [newNote, updatedNote]);
 
   const signOut = async () => {
     try {
@@ -56,6 +60,15 @@ function Dashboard() {
     setIsOpenAddNoteModal(false);
   };
 
+  const openModalEditNote = (note) => {
+    setIsOpenEditNoteModal(true);
+    setEditNote(note);
+  };
+
+  const closeModalEditNote = () => {
+    setIsOpenEditNoteModal(false);
+  };
+
   const openModalDeleteNote = (id) => {
     setIsOpenDeleteNoteModal(true);
     setNoteId(id);
@@ -65,34 +78,29 @@ function Dashboard() {
     setIsOpenDeleteNoteModal(false);
   };
 
-  const deleteNoteHandler = (id) => {
-    console.log(id);
-    const deleteNote = async () => {
-      try {
-        await axiosPrivate.delete(`/notes/${id}`);
-        const updatedNotes = notes.filter((note) => note.id !== id);
-        setNotes(updatedNotes);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    deleteNote();
-  };
-
   return (
     <section className="dashboard-container">
       <header>
         <h1>settings</h1>
         <ul>
           <li>
-            <button onClick={openModalAddNote}>Add note</button>
+            <button className="add-note-button" onClick={openModalAddNote}>
+              Add note
+            </button>
           </li>
         </ul>
-        <button onClick={signOut}>log out</button>
+        <button className="log-out-button" onClick={signOut}>
+          log out
+        </button>
       </header>
       <section className="notes-container">
         {notes.map((note) => (
-          <Card key={note.id} data={note} onDelete={openModalDeleteNote} />
+          <Card
+            key={note.id}
+            data={note}
+            onDelete={openModalDeleteNote}
+            onEdit={openModalEditNote}
+          />
         ))}
       </section>
       <NoteModal
@@ -102,11 +110,19 @@ function Dashboard() {
       />
       <DeleteNoteModal
         isOpen={isOpenDeleteNoteModal}
-        noteId={noteId}
+        noteId={deletedNoteId}
         closeModal={closeModalDeleteNote}
         notes={notes}
         setNotes={setNotes}
       />
+      {isOpenEditNoteModal && (
+        <EditNoteModal
+          isOpen={isOpenEditNoteModal}
+          note={editNote}
+          closeModal={closeModalEditNote}
+          setUpdatedNotes={setUpdatedNewNote}
+        />
+      )}
     </section>
   );
 }

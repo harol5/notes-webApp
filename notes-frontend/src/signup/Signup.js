@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import Input from "../common/InputForm";
 import axios from "../api/axios";
-import useAuth from "../hooks/useAuth";
 import {
   nameValidation,
   emailValidation,
@@ -13,15 +12,13 @@ import {
 import "../styles/form.css";
 
 function Signup({ setIsSignUpActive }) {
-  const { setAuth } = useAuth();
-
   //Utils for re-route after.
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
 
   const methods = useForm({ mode: "onTouched" });
-  const [errMsg, setErrMsg] = useState("");
+  const [messageFromSever, setMsg] = useState({ type: "", message: "" });
   const onSubmit = methods.handleSubmit((data) => {
     console.log(data);
     axios
@@ -31,17 +28,38 @@ function Signup({ setIsSignUpActive }) {
       })
       .then((res) => {
         console.log(res);
-        setAuth({ code: res.data.accessToken });
-        navigate("/dashboard", { replace: true, state: "this is a test" });
+        setMsg((prev) => {
+          return {
+            ...prev,
+            type: "success",
+            message: `${res.data.success}. You can login now!`,
+          };
+        });
+        methods.reset();
+        // navigate("/dashboard", { replace: true, state: "this is a test" });
       })
       .catch((err) => {
+        if (err.response.status === 409) {
+          setMsg((prev) => {
+            return {
+              ...prev,
+              type: "error",
+              message: `${err.response.data.message}. Please try another one.`,
+            };
+          });
+        }
         console.log(err);
       });
-    methods.reset();
   });
 
   return (
     <FormProvider {...methods}>
+      {messageFromSever && (
+        <DisplayMessage
+          type={messageFromSever.type}
+          message={messageFromSever.message}
+        />
+      )}
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">
         <Input {...nameValidation} />
 
@@ -55,10 +73,16 @@ function Signup({ setIsSignUpActive }) {
       </form>
       <p>
         Already have an Account?{" "}
-        <button onClick={() => setIsSignUpActive(false)}>LOGIN!</button>
+        <button className="warnning" onClick={() => setIsSignUpActive(false)}>
+          LOGIN!
+        </button>
       </p>
     </FormProvider>
   );
+}
+
+function DisplayMessage({ type, message }) {
+  return <span className={type}>{message}</span>;
 }
 
 export default Signup;

@@ -15,30 +15,66 @@
   padding: 0;
 }
 
+.dashboard-container .log-out-button:hover {
+  color: red;
+}
+.dashboard-container .add-note-button:hover {
+  color: rgb(26, 255, 0);
+}
+
 /*---------------------------*/
 .notes-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 1em;
   flex-wrap: wrap;
 }
 .card {
   background-color: rgb(0, 64, 94);
   padding: 1em;
+  width: 65%;
   height: 10em;
   display: flex;
   flex-direction: column;
   row-gap: 1em;
   position: relative;
 }
-
 .card:hover {
-  background-color: rgba(255, 255, 255, 0.592);
+  background-color: rgb(255 255 255 / 45%);
 }
-
 .todo {
   border: 1px dashed var(--theme-color-4);
 }
 .reminder {
   border: 1px dashed var(--theme-color-9);
+  background-color: rgb(193 0 98 / 19%);
+}
+
+.overlay {
+  align-items: center;
+}
+
+.note-container {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5em;
+}
+
+.note-container h2 {
+  flex-basis: 70%;
+}
+.note-container h3 {
+  flex-basis: 30%;
+  text-align: end;
+}
+.note-container p {
+  flex-basis: 100%;
+}
+
+.trash-icon:hover {
+  fill: red;
+}
+
+.pencil-icon:hover {
+  fill: rgb(64, 0, 255);
 }
