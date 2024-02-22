@@ -105,6 +105,12 @@ export const categoryTodoNoteValidation = {
   type: "radio",
   id: "todo",
   name: "category",
+  validation: {
+    required: {
+      value: true,
+      message: "required",
+    },
+  },
 };
 
 export const categoryReminderNoteValidation = {
@@ -112,6 +118,12 @@ export const categoryReminderNoteValidation = {
   type: "radio",
   id: "reminder",
   name: "category",
+  validation: {
+    required: {
+      value: true,
+      message: "required",
+    },
+  },
 };
 
 export const contentNoteValidation = {

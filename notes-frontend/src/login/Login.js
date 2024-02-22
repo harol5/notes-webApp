@@ -46,7 +46,7 @@ function Login({ setIsSignUpActive }) {
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">
         <Input {...usernameValidation} />
         <Input {...passwordLoginValidation} />
-        {errMsg && <h1>{errMsg}</h1>}
+        {errMsg && <h1 className="error">{errMsg}</h1>}
         <button onClick={onSubmit}>Login</button>
       </form>
       <p>

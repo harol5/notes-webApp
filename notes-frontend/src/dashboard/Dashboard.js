@@ -30,6 +30,7 @@ function Dashboard() {
         const response = await axiosPrivate.get("/notes", {
           signal: controller.signal,
         });
+        console.log(response);
         isMounted && setNotes(response.data);
       } catch (err) {
         console.log(err);
@@ -78,6 +79,21 @@ function Dashboard() {
     setIsOpenDeleteNoteModal(false);
   };
 
+  const handleFilter = (column, value) => {
+    const getNotes = async () => {
+      try {
+        const { data: notes } = await axiosPrivate.get(
+          `/notes?${column}=${value}`
+        );
+        console.log(notes);
+        setNotes(notes);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getNotes();
+  };
+
   return (
     <section className="dashboard-container">
       <header>
@@ -93,15 +109,37 @@ function Dashboard() {
           log out
         </button>
       </header>
-      <section className="notes-container">
-        {notes.map((note) => (
-          <Card
-            key={note.id}
-            data={note}
-            onDelete={openModalDeleteNote}
-            onEdit={openModalEditNote}
-          />
-        ))}
+      <section className="content">
+        <section className="controllers">
+          <div className="filter-container category">
+            <h1>Filter By:</h1>
+            <div>
+              <p
+                className="todo-filter"
+                onClick={() => handleFilter("category", "todo")}
+              >
+                To-DOS
+              </p>
+              <span>or</span>
+              <p
+                className="reminder-filter"
+                onClick={() => handleFilter("category", "reminder")}
+              >
+                Reminders
+              </p>
+            </div>
+          </div>
+        </section>
+        <section className="notes-container">
+          {notes.map((note) => (
+            <Card
+              key={note.id}
+              data={note}
+              onDelete={openModalDeleteNote}
+              onEdit={openModalEditNote}
+            />
+          ))}
+        </section>
       </section>
       <NoteModal
         isOpen={isOpenAddNoteModal}

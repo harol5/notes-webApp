@@ -1,6 +1,3 @@
-import pencil from "../assets/pencil-14.svg";
-import trash from "../assets/trash-can-filled.svg";
-
 function Card({ data, onDelete, onEdit }) {
   const getClassName = () => {
     let base = "card";
@@ -8,13 +5,22 @@ function Card({ data, onDelete, onEdit }) {
     return base;
   };
 
-  console.log(data);
+  const getDate = () => {
+    if (data.date_updated) {
+      const [date, time] = data.date_updated.split("T");
+      return date + " " + time.slice(0, -5);
+    } else {
+      const [date, time] = data.date_created.split("T");
+      return date + " " + time.slice(0, -5);
+    }
+  };
 
+  console.log(data);
   return (
     <div className={getClassName()}>
       <div className="note-container">
         <h2>{data.title.toUpperCase()}</h2>
-        <h3>{data.dateCreated}</h3>
+        <h3>{getDate()}</h3>
         <p>{data.content}</p>
       </div>
       <div className="overlay flex justify-evenly opacity-0 hover:opacity-100 absolute left-0 top-0 w-full h-full">

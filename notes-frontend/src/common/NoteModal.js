@@ -15,7 +15,7 @@ import {
 
 function NoteModal({ isOpen, closeModal, setNewNote }) {
   const axiosPrivate = useAxiosPrivate();
-  const methods = useForm({ mode: "onChange" });
+  const methods = useForm({ mode: "onSubmit" });
   const onSubmit = methods.handleSubmit((data) => {
     const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
     const updatedNote = { ...data, dateCreated: currentDate };

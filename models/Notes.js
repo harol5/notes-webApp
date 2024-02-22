@@ -51,10 +51,22 @@ const deleteNoteById = async (userId, noteId) => {
   return result;
 };
 
+const filterNotesBy = async (userId, column, value) => {
+  try {
+    const result = await pool.query(
+      `SELECT * FROM notes WHERE ${column} = '${value}' and user_id = '${userId}';`
+    );
+    return result.rows;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getAllNotesByUserId,
   createNote,
   getNoteById,
   updateNoteById,
   deleteNoteById,
+  filterNotesBy,
 };

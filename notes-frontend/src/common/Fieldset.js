@@ -9,7 +9,7 @@ function Fieldset({ children }) {
 
   const inputError = findInputError(errors, "category");
   const isInvalid = isFormInvalid(inputError);
-
+  console.log(errors);
   return (
     <fieldset>
       {children}

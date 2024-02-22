@@ -14,10 +14,13 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
 
   const methods = useForm({ mode: "onChange" });
   const onSubmit = methods.handleSubmit((data) => {
+    const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
+    const updatedNote = { ...data, dateUpdated: currentDate };
+
     const editNote = async () => {
       try {
-        await axiosPrivate.put(`/notes/${note.id}`, data);
-        setUpdatedNotes(data);
+        await axiosPrivate.put(`/notes/${note.id}`, updatedNote);
+        setUpdatedNotes(updatedNote);
       } catch (err) {
         console.log(err.response.status);
       }

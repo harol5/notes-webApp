@@ -2,15 +2,21 @@ const Notes = require("../models/Notes");
 
 const getAllNotesByUserIdHandler = async (req, res) => {
   const userId = parseInt(req.userId);
-  const notes = await Notes.getAllNotesByUserId(userId);
+  const queryStr = req.query;
+  let notes;
+
+  if (Object.values(req.query).length > 0) {
+    console.log("filter!!");
+    const [column, value] = Object.entries(queryStr)[0];
+    notes = await Notes.filterNotesBy(userId, column, value);
+  } else notes = await Notes.getAllNotesByUserId(userId);
+
   if (notes.length === 0) return res.sendStatus(404);
   else res.status(200).json(notes);
 };
 
 const createNoteHandler = async (req, res) => {
-  // const currentDate = new Date().toISOString().split("T")[0];
   const newNote = { ...req.body, userId: req.userId };
-  console.log(newNote);
   try {
     await Notes.createNote(newNote);
     res.status(201).json(newNote);
@@ -31,11 +37,17 @@ const getNoteByIdHandler = async (req, res) => {
   }
 };
 
+//------DELETE?
+const getNotesByFilterValueHandler = async (req, res) => {
+  const userId = parseInt(req.userId);
+  return res.sendStatus(204);
+};
+//-------
+
 const editNoteHandler = async (req, res) => {
   const userId = parseInt(req.userId);
   const noteId = parseInt(req.params.id);
-  const dateUpdated = new Date().toISOString().split("T")[0];
-  const updatedNote = { ...req.body, dateUpdated, userId, noteId };
+  const updatedNote = { ...req.body, userId, noteId };
   try {
     const { rowCount } = await Notes.updateNoteById(updatedNote);
     if (rowCount === 0) return res.sendStatus(404);
@@ -63,4 +75,5 @@ module.exports = {
   getNoteByIdHandler,
   editNoteHandler,
   deleteNoteById,
+  getNotesByFilterValueHandler,
 };
