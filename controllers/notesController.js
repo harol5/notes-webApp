@@ -5,8 +5,7 @@ const getAllNotesByUserIdHandler = async (req, res) => {
   const queryStr = req.query;
   let notes;
 
-  if (Object.values(req.query).length > 0) {
-    console.log("filter!!");
+  if (Object.values(queryStr).length > 0) {
     const [column, value] = Object.entries(queryStr)[0];
     notes = await Notes.filterNotesBy(userId, column, value);
   } else notes = await Notes.getAllNotesByUserId(userId);
@@ -19,7 +18,7 @@ const createNoteHandler = async (req, res) => {
   const newNote = { ...req.body, userId: req.userId };
   try {
     await Notes.createNote(newNote);
-    res.status(201).json(newNote);
+    return res.status(201).json(newNote);
   } catch (err) {
     return res.status(500).json({ message: err.toString() });
   }

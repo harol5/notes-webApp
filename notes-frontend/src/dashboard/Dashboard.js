@@ -20,6 +20,7 @@ function Dashboard() {
   const [isOpenDeleteNoteModal, setIsOpenDeleteNoteModal] = useState(false);
   const [isOpenEditNoteModal, setIsOpenEditNoteModal] = useState(false);
   const [editNote, setEditNote] = useState();
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -30,8 +31,8 @@ function Dashboard() {
         const response = await axiosPrivate.get("/notes", {
           signal: controller.signal,
         });
-        console.log(response);
         isMounted && setNotes(response.data);
+        setSelectedFilter("");
       } catch (err) {
         console.log(err);
       }
@@ -53,6 +54,7 @@ function Dashboard() {
     }
   };
 
+  //=========Modal methods
   const openModalAddNote = () => {
     setIsOpenAddNoteModal(true);
   };
@@ -79,13 +81,28 @@ function Dashboard() {
     setIsOpenDeleteNoteModal(false);
   };
 
+  //=========Filter methods
   const handleFilter = (column, value) => {
     const getNotes = async () => {
       try {
         const { data: notes } = await axiosPrivate.get(
           `/notes?${column}=${value}`
         );
-        console.log(notes);
+        console.log(value);
+        setSelectedFilter(value);
+        setNotes(notes);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getNotes();
+  };
+
+  const clearFilter = () => {
+    const getNotes = async () => {
+      try {
+        const { data: notes } = await axiosPrivate.get("/notes");
+        setSelectedFilter("");
         setNotes(notes);
       } catch (err) {
         console.log(err);
@@ -112,17 +129,37 @@ function Dashboard() {
       <section className="content">
         <section className="controllers">
           <div className="filter-container category">
-            <h1>Filter By:</h1>
+            <div>
+              <h1>Filter By:</h1>
+              <span
+                className={
+                  selectedFilter !== ""
+                    ? "clear-filter active"
+                    : "clear-filter inactive"
+                }
+                onClick={clearFilter}
+              >
+                (clear)
+              </span>
+            </div>
             <div>
               <p
-                className="todo-filter"
+                className={
+                  selectedFilter === "todo"
+                    ? "todo-filter selected"
+                    : "todo-filter"
+                }
                 onClick={() => handleFilter("category", "todo")}
               >
                 To-DOS
               </p>
               <span>or</span>
               <p
-                className="reminder-filter"
+                className={
+                  selectedFilter === "reminder"
+                    ? "reminder-filter selected"
+                    : "reminder-filter"
+                }
                 onClick={() => handleFilter("category", "reminder")}
               >
                 Reminders
@@ -141,11 +178,13 @@ function Dashboard() {
           ))}
         </section>
       </section>
-      <NoteModal
-        isOpen={isOpenAddNoteModal}
-        closeModal={closeModalAddNote}
-        setNewNote={setNewNote}
-      />
+      {isOpenAddNoteModal && (
+        <NoteModal
+          isOpen={isOpenAddNoteModal}
+          closeModal={closeModalAddNote}
+          setNewNote={setNewNote}
+        />
+      )}
       <DeleteNoteModal
         isOpen={isOpenDeleteNoteModal}
         noteId={deletedNoteId}

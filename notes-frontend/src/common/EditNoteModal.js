@@ -2,12 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { FormProvider, useForm, Controller } from "react-hook-form";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import {
-  categoryTodoNoteValidation,
-  categoryReminderNoteValidation,
-} from "../utils/inputValidations";
 import Fieldset from "./Fieldset";
-import RadioInput from "./RadioInput";
 
 function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
   const axiosPrivate = useAxiosPrivate();
@@ -133,8 +128,25 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
                           }}
                         />
                         <Fieldset>
-                          <RadioInput {...categoryReminderNoteValidation} />
-                          <RadioInput {...categoryTodoNoteValidation} />
+                          <div className="">
+                            <input
+                              type="radio"
+                              id="todo"
+                              value="todo"
+                              {...methods.register("category")}
+                              checked
+                            />
+                            <label htmlFor="todo">todo</label>
+                          </div>
+                          <div className="">
+                            <input
+                              type="radio"
+                              id="reminder"
+                              value="reminder"
+                              {...methods.register("category")}
+                            />
+                            <label htmlFor="reminder">reminder</label>
+                          </div>
                         </Fieldset>
                       </form>
                     </FormProvider>

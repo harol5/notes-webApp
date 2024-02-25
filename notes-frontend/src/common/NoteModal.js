@@ -4,19 +4,17 @@ import { FormProvider, useForm } from "react-hook-form";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import Input from "../common/InputForm";
 import Textarea from "./TextareaForm";
-import RadioInput from "./RadioInput";
 import Fieldset from "./Fieldset";
 import {
   titleNoteValidation,
   contentNoteValidation,
-  categoryTodoNoteValidation,
-  categoryReminderNoteValidation,
 } from "../utils/inputValidations";
 
 function NoteModal({ isOpen, closeModal, setNewNote }) {
   const axiosPrivate = useAxiosPrivate();
   const methods = useForm({ mode: "onSubmit" });
   const onSubmit = methods.handleSubmit((data) => {
+    //ISSUE: form is not returning all data (category:null);
     const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
     const updatedNote = { ...data, dateCreated: currentDate };
     console.log(updatedNote);
@@ -76,8 +74,25 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
                         <Input {...titleNoteValidation} />
                         <Textarea {...contentNoteValidation} />
                         <Fieldset>
-                          <RadioInput {...categoryReminderNoteValidation} />
-                          <RadioInput {...categoryTodoNoteValidation} />
+                          <div className="">
+                            <input
+                              type="radio"
+                              id="todo"
+                              value="todo"
+                              {...methods.register("category")}
+                              checked
+                            />
+                            <label htmlFor="todo">todo</label>
+                          </div>
+                          <div className="">
+                            <input
+                              type="radio"
+                              id="reminder"
+                              value="reminder"
+                              {...methods.register("category")}
+                            />
+                            <label htmlFor="reminder">reminder</label>
+                          </div>
                         </Fieldset>
                       </form>
                     </FormProvider>
