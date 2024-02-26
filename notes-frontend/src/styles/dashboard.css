@@ -139,3 +139,7 @@
 .pencil-icon:hover {
   fill: rgb(64, 0, 255);
 }
+
+.check-mark-icon:hover {
+  fill: rgb(26, 255, 0);
+}

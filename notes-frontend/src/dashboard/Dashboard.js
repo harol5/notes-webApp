@@ -81,6 +81,11 @@ function Dashboard() {
     setIsOpenDeleteNoteModal(false);
   };
 
+  const handleComplete = (data) => {
+    console.log("this was checked");
+    console.log(data);
+  };
+
   //=========Filter methods
   const handleFilter = (column, value) => {
     const getNotes = async () => {
@@ -174,6 +179,7 @@ function Dashboard() {
               data={note}
               onDelete={openModalDeleteNote}
               onEdit={openModalEditNote}
+              onComplete={handleComplete}
             />
           ))}
         </section>

@@ -1,4 +1,4 @@
-function Card({ data, onDelete, onEdit }) {
+function Card({ data, onDelete, onEdit, onComplete }) {
   const getClassName = () => {
     let base = "card";
     base += data.category === "todo" ? " todo" : " reminder";
@@ -33,6 +33,21 @@ function Card({ data, onDelete, onEdit }) {
           viewBox="0 0 24 24"
         >
           <path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z" />
+        </svg>
+        <svg
+          className="check-mark-icon w-6 opacity-100 cursor-pointer"
+          onClick={() => onComplete(data)}
+          clip-rule="evenodd"
+          fill-rule="evenodd"
+          stroke-linejoin="round"
+          stroke-miterlimit="2"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm-5.049 10.386 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z"
+            fill-rule="nonzero"
+          />
         </svg>
         <svg
           className="trash-icon w-6 opacity-100 cursor-pointer"

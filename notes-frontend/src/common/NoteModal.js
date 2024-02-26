@@ -16,7 +16,11 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
   const onSubmit = methods.handleSubmit((data) => {
     //ISSUE: form is not returning all data (category:null);
     const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
-    const updatedNote = { ...data, dateCreated: currentDate };
+    const updatedNote = {
+      ...data,
+      dateCreated: currentDate,
+      status: "pending",
+    };
     console.log(updatedNote);
 
     const addNotes = async () => {

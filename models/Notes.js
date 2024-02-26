@@ -16,10 +16,11 @@ const createNote = async ({
   category,
   content,
   dateCreated,
+  status,
   userId,
 }) => {
   await pool.query(
-    `INSERT INTO notes(title,category,date_created,content,user_id) VALUES('${title}','${category}','${dateCreated}','${content}',${userId})`
+    `INSERT INTO notes(title,category,date_created,content,user_id,status) VALUES('${title}','${category}','${dateCreated}','${content}',${userId},'${status}')`
   );
 };
 
