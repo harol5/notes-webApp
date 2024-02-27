@@ -13,14 +13,16 @@ function Dashboard() {
   const logout = useLogout();
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState({});
-  const [updatedNote, setUpdatedNewNote] = useState({});
+  const [noteCreated, setNewNote] = useState({});
+  const [noteUpdated, setNoteUpdated] = useState({});
+  const [noteCompleted, setNoteCompleted] = useState({});
   const [deletedNoteId, setNoteId] = useState();
   const [isOpenAddNoteModal, setIsOpenAddNoteModal] = useState(false);
   const [isOpenDeleteNoteModal, setIsOpenDeleteNoteModal] = useState(false);
   const [isOpenEditNoteModal, setIsOpenEditNoteModal] = useState(false);
   const [editNote, setEditNote] = useState();
   const [selectedFilter, setSelectedFilter] = useState("");
+  const [isCompletedActived, setIsCompletedActived] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -43,7 +45,7 @@ function Dashboard() {
       isMounted = false;
       controller.abort();
     };
-  }, [newNote, updatedNote]);
+  }, [noteCreated, noteUpdated, noteCompleted]);
 
   const signOut = async () => {
     try {
@@ -81,9 +83,23 @@ function Dashboard() {
     setIsOpenDeleteNoteModal(false);
   };
 
-  const handleComplete = (data) => {
-    console.log("this was checked");
-    console.log(data);
+  const handleCompleted = (data) => {
+    const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
+    const updatedNote = {
+      ...data,
+      date_updated: currentDate,
+      status: "completed",
+    };
+
+    const editNote = async () => {
+      try {
+        await axiosPrivate.put(`/notes/${data.id}`, updatedNote);
+        setNoteCompleted(updatedNote);
+      } catch (err) {
+        console.log(err.response.status);
+      }
+    };
+    editNote();
   };
 
   //=========Filter methods
@@ -115,6 +131,9 @@ function Dashboard() {
     };
     getNotes();
   };
+
+  console.log("this was checked");
+  console.log(noteCompleted);
 
   return (
     <section className="dashboard-container">
@@ -172,16 +191,41 @@ function Dashboard() {
             </div>
           </div>
         </section>
-        <section className="notes-container">
-          {notes.map((note) => (
-            <Card
-              key={note.id}
-              data={note}
-              onDelete={openModalDeleteNote}
-              onEdit={openModalEditNote}
-              onComplete={handleComplete}
-            />
-          ))}
+        <section className="notes-main">
+          <div className="switchers-container">
+            <h1 onClick={() => setIsCompletedActived(false)}>in progress</h1>
+            <h1 onClick={() => setIsCompletedActived(true)}>completed</h1>
+          </div>
+          {!isCompletedActived && (
+            <section className="notes-container">
+              {notes
+                .filter((note) => note.status === "pending")
+                .map((note) => (
+                  <Card
+                    key={note.id}
+                    data={note}
+                    onDelete={openModalDeleteNote}
+                    onEdit={openModalEditNote}
+                    onComplete={handleCompleted}
+                  />
+                ))}
+            </section>
+          )}
+          {isCompletedActived && (
+            <section className="notes-container">
+              {notes
+                .filter((note) => note.status === "completed")
+                .map((note) => (
+                  <Card
+                    key={note.id}
+                    data={note}
+                    onDelete={openModalDeleteNote}
+                    onEdit={openModalEditNote}
+                    onComplete={handleCompleted}
+                  />
+                ))}
+            </section>
+          )}
         </section>
       </section>
       {isOpenAddNoteModal && (
@@ -203,7 +247,7 @@ function Dashboard() {
           isOpen={isOpenEditNoteModal}
           note={editNote}
           closeModal={closeModalEditNote}
-          setUpdatedNotes={setUpdatedNewNote}
+          setUpdatedNotes={setNoteUpdated}
         />
       )}
     </section>

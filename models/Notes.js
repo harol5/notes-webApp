@@ -35,12 +35,13 @@ const updateNoteById = async ({
   title,
   category,
   content,
-  dateUpdated,
+  date_updated,
   userId,
   noteId,
+  status,
 }) => {
   const result = await pool.query(
-    `UPDATE notes SET title = '${title}', category = '${category}', date_updated = '${dateUpdated}', content = '${content}' WHERE user_id = ${userId} and id = ${noteId}`
+    `UPDATE notes SET title = '${title}', category = '${category}', date_updated = '${date_updated}', content = '${content}', status = '${status}' WHERE user_id = ${userId} and id = ${noteId}`
   );
   return result;
 };

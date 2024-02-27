@@ -12,7 +12,7 @@ import {
 
 function NoteModal({ isOpen, closeModal, setNewNote }) {
   const axiosPrivate = useAxiosPrivate();
-  const methods = useForm({ mode: "onSubmit" });
+  const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit((data) => {
     //ISSUE: form is not returning all data (category:null);
     const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
@@ -21,6 +21,7 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
       dateCreated: currentDate,
       status: "pending",
     };
+    console.log(data);
     console.log(updatedNote);
 
     const addNotes = async () => {
@@ -81,21 +82,21 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
                           <div className="">
                             <input
                               type="radio"
-                              id="todo"
+                              id="field-todo"
                               value="todo"
                               {...methods.register("category")}
                               checked
                             />
-                            <label htmlFor="todo">todo</label>
+                            <label htmlFor="field-todo">todo</label>
                           </div>
                           <div className="">
                             <input
                               type="radio"
-                              id="reminder"
+                              id="field-reminder"
                               value="reminder"
                               {...methods.register("category")}
                             />
-                            <label htmlFor="reminder">reminder</label>
+                            <label htmlFor="field-reminder">reminder</label>
                           </div>
                         </Fieldset>
                       </form>

@@ -7,10 +7,11 @@ import Fieldset from "./Fieldset";
 function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
   const axiosPrivate = useAxiosPrivate();
 
-  const methods = useForm({ mode: "onChange" });
+  const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit((data) => {
     const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
-    const updatedNote = { ...data, dateUpdated: currentDate };
+    const updatedNote = { ...note, ...data, date_updated: currentDate };
+    console.log(updatedNote);
 
     const editNote = async () => {
       try {

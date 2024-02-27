@@ -36,13 +36,6 @@ const getNoteByIdHandler = async (req, res) => {
   }
 };
 
-//------DELETE?
-const getNotesByFilterValueHandler = async (req, res) => {
-  const userId = parseInt(req.userId);
-  return res.sendStatus(204);
-};
-//-------
-
 const editNoteHandler = async (req, res) => {
   const userId = parseInt(req.userId);
   const noteId = parseInt(req.params.id);
@@ -74,5 +67,4 @@ module.exports = {
   getNoteByIdHandler,
   editNoteHandler,
   deleteNoteById,
-  getNotesByFilterValueHandler,
 };
