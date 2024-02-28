@@ -94,6 +94,14 @@
   border: 1px dashed rgba(245, 245, 220, 0.306);
 }
 
+.inprogress-actived {
+  background-color: #ff5f007d;
+}
+
+.completed-actived {
+  background-color: #2eff0047;
+}
+
 /*notes (todo/reminders)*/
 .notes-main {
   flex-basis: 70%;
@@ -162,4 +170,19 @@
 
 .check-mark-icon:hover {
   fill: rgb(26, 255, 0);
+}
+
+/*=================form to edit and crete notes */
+.note-form {
+  background-color: var(--theme-color-5);
+  /* background-color: #3a3a3a; */
+}
+
+.note-form > h3 {
+  text-align: center;
+  color: var(--theme-color-1);
+}
+
+.note-form input {
+  background-color: rgb(249, 250, 251);
 }

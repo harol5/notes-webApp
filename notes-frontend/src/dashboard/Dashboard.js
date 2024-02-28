@@ -193,8 +193,18 @@ function Dashboard() {
         </section>
         <section className="notes-main">
           <div className="switchers-container">
-            <h1 onClick={() => setIsCompletedActived(false)}>in progress</h1>
-            <h1 onClick={() => setIsCompletedActived(true)}>completed</h1>
+            <h1
+              className={!isCompletedActived ? "inprogress-actived" : ""}
+              onClick={() => setIsCompletedActived(false)}
+            >
+              in progress
+            </h1>
+            <h1
+              className={isCompletedActived ? "completed-actived" : ""}
+              onClick={() => setIsCompletedActived(true)}
+            >
+              completed
+            </h1>
           </div>
           {!isCompletedActived && (
             <section className="notes-container">

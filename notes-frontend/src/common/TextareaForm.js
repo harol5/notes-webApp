@@ -26,9 +26,9 @@ function Textarea({ label, id, validation }) {
       <textarea
         id={id}
         {...register(id, validation)}
-        rows="6"
+        rows="8"
         placeholder="Write your thoughts here..."
-        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700  dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
       />
     </div>
   );

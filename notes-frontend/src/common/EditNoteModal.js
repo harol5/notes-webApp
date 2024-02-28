@@ -38,7 +38,7 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/25" />
+          <div className="fixed inset-0 bg-black/50" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -52,12 +52,9 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
-                >
-                  New Note
+              <Dialog.Panel className="note-form w-full max-w-md transform overflow-hidden p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Title as="h3" className="text-lg font-medium leading-6">
+                  Edit Note
                 </Dialog.Title>
                 <div className="mt-2">
                   <span className="text-sm text-gray-500">
@@ -75,7 +72,7 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
                             return (
                               <div className="input-container">
                                 <label htmlFor="title">
-                                  <h1>{name}</h1>
+                                  <h1>Note Title</h1>
                                 </label>
                                 {error && (
                                   <InputError
@@ -107,7 +104,7 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
                             return (
                               <div className="textare-container">
                                 <label htmlFor="content">
-                                  <h1>{name}</h1>
+                                  <h1>Note Content</h1>
                                 </label>
                                 {error && (
                                   <InputError
@@ -121,8 +118,8 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
                                   onChange={onChange} // send value to hook form
                                   value={value}
                                   name={name}
-                                  rows="6"
-                                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  rows="8"
+                                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700  dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 />
                               </div>
                             );

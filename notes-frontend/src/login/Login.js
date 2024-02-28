@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import Input from "../common/InputForm";
+import InputPw from "../common/InputFormPw";
 import axios from "../api/axios";
 import {
   usernameValidation,
@@ -35,7 +36,7 @@ function Login({ setIsSignUpActive }) {
       .catch((err) => {
         if (!err?.response) setErrMsg("No Server Response");
         else if (err.response?.status >= 400)
-          setErrMsg("Missing Username or Password");
+          setErrMsg("Missing Username or Password!!");
         else console.log(err);
       });
     methods.reset();
@@ -43,10 +44,10 @@ function Login({ setIsSignUpActive }) {
 
   return (
     <FormProvider {...methods}>
+      {errMsg && <DisplayMessage message={errMsg} />}
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">
         <Input {...usernameValidation} />
-        <Input {...passwordLoginValidation} />
-        {errMsg && <h1 className="error">{errMsg}</h1>}
+        <InputPw {...passwordLoginValidation} />
         <button onClick={onSubmit}>Login</button>
       </form>
       <p>
@@ -57,6 +58,10 @@ function Login({ setIsSignUpActive }) {
       </p>
     </FormProvider>
   );
+}
+
+function DisplayMessage({ message }) {
+  return <h1 className="error">{message}</h1>;
 }
 
 export default Login;

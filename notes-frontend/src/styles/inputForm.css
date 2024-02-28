@@ -1,6 +1,7 @@
 .input-container {
   display: flex;
   flex-direction: column;
+  margin: 0.5em 0;
 }
 
 .input-container label {
@@ -34,6 +35,7 @@
 .textare-container {
   display: flex;
   flex-direction: column;
+  margin: 0.5em 0;
 }
 
 .textare-container label {
@@ -52,4 +54,7 @@
 
 .warnning:hover {
   color: rgb(255, 106, 0);
+}
+
+.eye-icon {
 }
