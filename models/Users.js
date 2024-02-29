@@ -22,10 +22,17 @@ const getUserByRefreshToken = async (refreshToken) => {
   }
 };
 
-const insertNewUser = async ({ name, email, username, password, date }) => {
+const insertNewUser = async ({
+  name,
+  email,
+  username,
+  password,
+  date,
+  active,
+}) => {
   try {
     await pool.query(
-      `INSERT INTO users(name,email,username,password,date_created) VALUES('${name}','${email}','${username}','${password}','${date}')`
+      `INSERT INTO users(name,email,username,password,date_created,active) VALUES('${name}','${email}','${username}','${password}','${date}',${active})`
     );
   } catch (err) {
     console.log(err);

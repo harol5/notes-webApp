@@ -8095,3 +8095,13 @@
 2024/02/27	22:03:37	177a0017-587b-4860-8f66-99707acf65cd	GET	http://localhost:3000	/refresh
 2024/02/27	22:03:54	cd277849-e471-45a0-a0e2-e6d4ea5073bd	GET	http://localhost:3000	/refresh
 2024/02/27	22:31:00	10c7cb5e-ec2c-42ed-a385-94d40ab05278	GET	http://localhost:3000	/refresh
+2024/02/28	19:05:59	53effbb0-55b4-4409-9795-51439b55e246	GET	http://localhost:3000	/refresh
+2024/02/28	19:06:11	7314cc83-cea3-40f8-8f98-89f58f9b6c03	GET	http://localhost:3000	/refresh
+2024/02/28	19:17:50	9d095c0f-73df-4e7b-931b-3148e5eed117	GET	http://localhost:3000	/refresh
+2024/02/28	19:35:47	456b19d8-238b-49f7-ab48-0a8ad5b98c31	GET	http://localhost:3000	/refresh
+2024/02/28	20:17:17	2fdb7b2a-92b4-45ec-a737-a80161d4dc36	GET	http://localhost:3000	/refresh
+2024/02/28	22:35:41	e0498a3d-0e5e-4344-ac2f-c01eed535176	GET	http://localhost:3000	/refresh
+2024/02/28	22:36:25	558eba33-1bf3-41e4-a273-c047a408bc07	POST	http://localhost:3000	/register
+2024/02/28	22:37:29	37bae371-7825-417f-a763-6ea74cbdac1e	POST	http://localhost:3000	/login
+2024/02/28	22:37:29	cc454316-b234-4585-ab4c-1306b27d0d25	GET	http://localhost:3000	/notes
+2024/02/28	22:37:33	0db2325f-a665-4f1c-af8c-bb98c9895713	GET	http://localhost:3000	/logout

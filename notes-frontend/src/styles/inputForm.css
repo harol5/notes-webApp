@@ -56,5 +56,22 @@
   color: rgb(255, 106, 0);
 }
 
+/*----adding eye toggle to see pwd--------*/
+.input-pwd-wrapper {
+  position: relative;
+}
+
+.input-pwd-wrapper > input {
+  width: 100%;
+}
 .eye-icon {
+  position: absolute;
+  top: 22%;
+  right: 10px;
+  width: 1.8em;
+  cursor: pointer;
+}
+
+.actived {
+  fill: rgb(26, 255, 0);
 }
