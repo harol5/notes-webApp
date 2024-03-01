@@ -35,6 +35,10 @@ function Login({ setIsSignUpActive }) {
       })
       .catch((err) => {
         if (!err?.response) setErrMsg("No Server Response");
+        else if (err.response?.status === 403)
+          setErrMsg(
+            "you have not confirmed your account, please check your email"
+          );
         else if (err.response?.status >= 400)
           setErrMsg("Missing Username or Password!!");
         else console.log(err);

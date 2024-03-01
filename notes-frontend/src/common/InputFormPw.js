@@ -15,9 +15,17 @@ function Input({ label, type, id, validation }) {
 
   return (
     <div className="input-container">
-      <label htmlFor={id}>
-        <h1>{label}</h1>
-      </label>
+      <div className="flex items-center justify-between ">
+        <label htmlFor={id}>
+          <h1>{label}</h1>
+        </label>
+        <p
+          className="text-gray-700 cursor-pointer"
+          onClick={() => console.log("forgot pwd click")}
+        >
+          forgot?
+        </p>
+      </div>
       {isInvalid && (
         <InputError
           message={inputError.error.message}

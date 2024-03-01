@@ -6,6 +6,8 @@ const loginHandler = async (req, res) => {
   const { username, password } = req.body;
   const foundUser = await users.getUserByUsername(username);
   if (!foundUser) return res.sendStatus(401); //unauthorized
+  if (!foundUser.active)
+    return res.status(403).json({ message: "you must confirm your account" });
 
   const match = await bcrypt.compare(password, foundUser.password);
   if (match) {

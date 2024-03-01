@@ -29,10 +29,11 @@ const insertNewUser = async ({
   password,
   date,
   active,
+  confirmToken,
 }) => {
   try {
     await pool.query(
-      `INSERT INTO users(name,email,username,password,date_created,active) VALUES('${name}','${email}','${username}','${password}','${date}',${active})`
+      `INSERT INTO users(name,email,username,password,date_created,active,confirmation_token) VALUES('${name}','${email}','${username}','${password}','${date}',${active},'${confirmToken}')`
     );
   } catch (err) {
     console.log(err);

@@ -23,6 +23,7 @@ app.use("/register", require("./routers/register"));
 app.use("/login", require("./routers/login"));
 app.use("/logout", require("./routers/logout"));
 app.use("/refresh", require("./routers/refreshToken"));
+app.use("/verify-account", require("./routers/confirmAccount"));
 
 app.use(verifyJWT);
 app.use("/notes", require("./routers/notes"));

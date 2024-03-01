@@ -32,7 +32,7 @@ function Signup({ setIsSignUpActive }) {
           return {
             ...prev,
             type: "success",
-            message: `${res.data.success}. You can login now!`,
+            message: `${res.data.success}. Please check your email to confirm your account!`,
           };
         });
         methods.reset();
