@@ -16,7 +16,7 @@ const registerHandler = async (req, res) => {
     const confirmToken = jwt.sign(
       {
         UserInfo: {
-          userId: newUser.email,
+          email: newUser.email,
           username: newUser.username,
         },
       },
@@ -29,9 +29,9 @@ const registerHandler = async (req, res) => {
       password: hashedPwd,
       date: date_created,
       active: false,
-      confirmToken: confirmToken,
     };
     await users.insertNewUser(newUserWithHashedPwd);
+    await users.insertVerificationToken(newUser.username, confirmToken);
 
     //TODO: should i create a page that will handle the verification of the account?
     await transporter.sendMail({

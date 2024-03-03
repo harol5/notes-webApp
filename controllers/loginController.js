@@ -33,7 +33,7 @@ const loginHandler = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    await users.updateUser("refresh_token", refreshToken, username);
+    await users.updateUser(username, "refresh_token", refreshToken);
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,

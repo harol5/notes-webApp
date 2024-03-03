@@ -29,21 +29,40 @@ const insertNewUser = async ({
   password,
   date,
   active,
-  confirmToken,
 }) => {
   try {
     await pool.query(
-      `INSERT INTO users(name,email,username,password,date_created,active,confirmation_token) VALUES('${name}','${email}','${username}','${password}','${date}',${active},'${confirmToken}')`
+      `INSERT INTO users(name,email,username,password,date_created,active) VALUES('${name}','${email}','${username}','${password}','${date}',${active})`
     );
   } catch (err) {
     console.log(err);
   }
 };
 
-const updateUser = async (column, value, username) => {
+const updateUser = async (username, column, value) => {
   try {
     await pool.query(
       `UPDATE users SET ${column} = '${value}' WHERE username = '${username}'`
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const insertVerificationToken = async (username, confirmToken) => {
+  try {
+    await pool.query(
+      `INSERT INTO verificationtokens(username,token) VALUES('${username}','${confirmToken}')`
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const deleteVerificationToken = async (username) => {
+  try {
+    await pool.query(
+      `DELETE FROM verificationtokens WHERE username = '${username}'`
     );
   } catch (err) {
     console.log(err);
@@ -55,4 +74,6 @@ module.exports = {
   getUserByRefreshToken,
   insertNewUser,
   updateUser,
+  insertVerificationToken,
+  deleteVerificationToken,
 };

@@ -1,16 +1,28 @@
 const jwt = require("jsonwebtoken");
-const users = require("../models/Users");
+const Users = require("../models/Users");
 
-/*TODO:
-this handler will check the token on the query parameter and see if it matches
-with the one saved on database
-any other verification?
-*/
 const confirmAccountHandler = async (req, res) => {
-  const queryStr = req.query;
-  console.log(queryStr);
+  const token = req.query.code;
 
-  return res.send("endpoint is working");
+  let username;
+  jwt.verify(token, process.env.CONFIRM_TOKEN_SECRET, (err, decoded) => {
+    if (err) return res.sendStatus(403); //invalid token.
+
+    console.log(decoded.UserInfo.username);
+    username = decoded.UserInfo.username;
+  });
+
+  const user = await Users.getUserByUsername(username);
+  if (!user) return res.status(409).json({ message: "not valid" }); //conflit with token
+  console.log(user);
+
+  await Users.updateUser(username, "active", true);
+  await Users.deleteVerificationToken(username);
+
+  return res.redirect(
+    301,
+    `http://localhost:3000/account-verified/${username}`
+  );
 };
 
 module.exports = { confirmAccountHandler };

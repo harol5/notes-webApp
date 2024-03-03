@@ -15,6 +15,8 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
   const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit((data) => {
     //ISSUE: form is not returning all data (category:null);
+    console.log(data);
+
     const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
     const updatedNote = {
       ...data,

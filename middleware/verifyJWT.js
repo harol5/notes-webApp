@@ -10,7 +10,6 @@ const verifyJWT = (req, res, next) => {
   console.log(token);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-    console.log("-----verifyJWT");
     console.log(err);
     if (err) return res.sendStatus(403); //invalid token.
 
