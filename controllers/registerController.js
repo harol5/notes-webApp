@@ -33,7 +33,6 @@ const registerHandler = async (req, res) => {
     await users.insertNewUser(newUserWithHashedPwd);
     await users.insertVerificationToken(newUser.username, confirmToken);
 
-    //TODO: should i create a page that will handle the verification of the account?
     await transporter.sendMail({
       from: process.env.EMAIL,
       to: newUser.email,

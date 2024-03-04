@@ -11,6 +11,17 @@ const getUserByUsername = async (username) => {
   }
 };
 
+const getUserByEmail = async (email) => {
+  try {
+    const result = await pool.query(
+      `SELECT * FROM users WHERE email = '${email}'`
+    );
+    return result.rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const getUserByRefreshToken = async (refreshToken) => {
   try {
     const result = await pool.query(
@@ -71,6 +82,7 @@ const deleteVerificationToken = async (username) => {
 
 module.exports = {
   getUserByUsername,
+  getUserByEmail,
   getUserByRefreshToken,
   insertNewUser,
   updateUser,

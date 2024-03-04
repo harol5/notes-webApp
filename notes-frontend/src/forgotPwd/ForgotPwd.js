@@ -1,37 +1,27 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import Input from "../common/InputForm";
-import InputPw from "../common/InputFormPw";
 import axios from "../api/axios";
-import {
-  nameValidation,
-  emailValidation,
-  usernameValidation,
-  passwordValidation,
-} from "../utils/inputValidations";
+import { emailValidation } from "../utils/inputValidations";
 import "../styles/form.css";
 
-function Signup({ setCurrentForm }) {
+const ForgotPwd = ({ setCurrentForm }) => {
   const methods = useForm({ mode: "onTouched" });
   const [messageFromSever, setMsg] = useState({ type: "", message: "" });
   const onSubmit = methods.handleSubmit((data) => {
     console.log(data);
     axios
-      .post("/register", data, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
+      .post("/forgot-pwd", data)
       .then((res) => {
         console.log(res);
         setMsg((prev) => {
           return {
             ...prev,
             type: "success",
-            message: `${res.data.success}. Please check your email to confirm your account!`,
+            message: `${res.data.success}.`,
           };
         });
         methods.reset();
-        // navigate("/dashboard", { replace: true, state: "this is a test" });
       })
       .catch((err) => {
         if (err.response.status === 409) {
@@ -56,28 +46,21 @@ function Signup({ setCurrentForm }) {
         />
       )}
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">
-        <Input {...nameValidation} />
-
         <Input {...emailValidation} />
-
-        <Input {...usernameValidation} />
-
-        <InputPw {...passwordValidation} isLoggin={false} />
-
         <button onClick={onSubmit}>Create Account</button>
       </form>
       <p>
-        Already have an Account?{" "}
-        <button className="warnning" onClick={() => setCurrentForm("login")}>
-          LOGIN!
+        Dont have an Account?{" "}
+        <button className="warnning" onClick={() => setCurrentForm("signup")}>
+          SIGN UP!
         </button>
       </p>
     </FormProvider>
   );
-}
+};
 
 function DisplayMessage({ type, message }) {
   return <span className={type}>{message}</span>;
 }
 
-export default Signup;
+export default ForgotPwd;

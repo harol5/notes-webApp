@@ -138,7 +138,14 @@ function Dashboard() {
   return (
     <section className="dashboard-container">
       <header>
-        <h1>settings</h1>
+        <div className="settings-wrapper">
+          <h1>settings</h1>
+          <ul>
+            <li>Change email</li>
+            <li>Change password</li>
+            <li>Delete account</li>
+          </ul>
+        </div>
         <ul>
           <li>
             <button className="add-note-button" onClick={openModalAddNote}>

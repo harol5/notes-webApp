@@ -4,7 +4,7 @@ import { isFormInvalid } from "../utils/isFormInvalid";
 import "../styles/inputForm.css";
 import { useState } from "react";
 
-function Input({ label, type, id, validation }) {
+function Input({ label, type, id, validation, isLoggin, setCurrentForm }) {
   const [isVisible, setIsVisible] = useState(false);
   const {
     register,
@@ -19,12 +19,14 @@ function Input({ label, type, id, validation }) {
         <label htmlFor={id}>
           <h1>{label}</h1>
         </label>
-        <p
-          className="text-gray-700 cursor-pointer"
-          onClick={() => console.log("forgot pwd click")}
-        >
-          forgot?
-        </p>
+        {isLoggin && (
+          <p
+            className="text-gray-700 cursor-pointer"
+            onClick={() => setCurrentForm("forgotPwd")}
+          >
+            forgot?
+          </p>
+        )}
       </div>
       {isInvalid && (
         <InputError

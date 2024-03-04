@@ -9,6 +9,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import RequireAuth from "./utils/RequireAuth";
 import PersistLogin from "./utils/PersistLogin";
 import VerificationPanel from "./verificationPanel/VerificationPanel";
+import ResetPwd from "./resetPwd/ResetPwd";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/account-verified/:username",
     element: <VerificationPanel />,
+  },
+  {
+    path: "/reset-pwd",
+    element: <ResetPwd />,
   },
 ]);
 

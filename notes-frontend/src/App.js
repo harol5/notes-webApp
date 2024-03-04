@@ -1,15 +1,16 @@
 import "./App.css";
-import Signup from "./signup/Signup";
 import Login from "./login/Login";
+import Signup from "./signup/Signup";
+import ForgotPwd from "./forgotPwd/ForgotPwd";
 import { useState } from "react";
 import useAuth from "./hooks/useAuth";
 import { Navigate } from "react-router-dom";
 
 function App() {
-  const [isSignUpActive, setIsSignUpActive] = useState(false);
+  const [currentForm, setCurrentForm] = useState("login");
   const { auth } = useAuth();
 
-  console.log("root ", auth);
+  console.log("current form:", currentForm);
 
   return auth?.code ? (
     <Navigate to="/dashboard" replace />
@@ -27,8 +28,15 @@ function App() {
         </p>
       </section>
       <section className="form-container">
-        {!isSignUpActive && <Login setIsSignUpActive={setIsSignUpActive} />}
-        {isSignUpActive && <Signup setIsSignUpActive={setIsSignUpActive} />}
+        {currentForm === "login" ? (
+          <Login setCurrentForm={setCurrentForm} />
+        ) : currentForm === "signup" ? (
+          <Signup setCurrentForm={setCurrentForm} />
+        ) : currentForm === "forgotPwd" ? (
+          <ForgotPwd setCurrentForm={setCurrentForm} />
+        ) : (
+          <h1>internal error</h1>
+        )}
       </section>
     </>
   );

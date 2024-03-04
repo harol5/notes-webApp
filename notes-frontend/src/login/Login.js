@@ -11,7 +11,7 @@ import {
 } from "../utils/inputValidations";
 import "../styles/form.css";
 
-function Login({ setIsSignUpActive }) {
+function Login({ setCurrentForm }) {
   const { setAuth } = useAuth();
 
   //Utils for re-route after.
@@ -51,12 +51,16 @@ function Login({ setIsSignUpActive }) {
       {errMsg && <DisplayMessage message={errMsg} />}
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">
         <Input {...usernameValidation} />
-        <InputPw {...passwordLoginValidation} />
+        <InputPw
+          {...passwordLoginValidation}
+          isLoggin={true}
+          setCurrentForm={setCurrentForm}
+        />
         <button onClick={onSubmit}>Login</button>
       </form>
       <p>
         Dont have an Account?{" "}
-        <button className="warnning" onClick={() => setIsSignUpActive(true)}>
+        <button className="warnning" onClick={() => setCurrentForm("signup")}>
           SIGN UP!
         </button>
       </p>
