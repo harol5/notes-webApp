@@ -4,6 +4,7 @@ import Input from "../common/InputForm";
 import axios from "../api/axios";
 import { emailValidation } from "../utils/inputValidations";
 import "../styles/form.css";
+import "../styles/resetPassword.css";
 
 const ForgotPwd = ({ setCurrentForm }) => {
   const methods = useForm({ mode: "onTouched" });
@@ -45,14 +46,24 @@ const ForgotPwd = ({ setCurrentForm }) => {
           message={messageFromSever.message}
         />
       )}
+      <p className="reset-pwd">
+        In order to reset your password, please enter the email associated with
+        your account, you will receive an email with futher instructions.
+      </p>
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">
         <Input {...emailValidation} />
-        <button onClick={onSubmit}>Create Account</button>
+        <button onClick={onSubmit}>Reset Password</button>
       </form>
       <p>
         Dont have an Account?{" "}
         <button className="warnning" onClick={() => setCurrentForm("signup")}>
           SIGN UP!
+        </button>
+      </p>
+      <p>
+        Already have an Account?{" "}
+        <button className="warnning" onClick={() => setCurrentForm("login")}>
+          LOGIN!
         </button>
       </p>
     </FormProvider>

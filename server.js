@@ -26,6 +26,7 @@ app.use("/refresh", require("./routers/refreshToken"));
 app.use("/verify-account", require("./routers/confirmAccount"));
 app.use("/forgot-pwd", require("./routers/forgotPwd"));
 
+//------------Protected Routers---------------//
 app.use(verifyJWT);
 app.use("/notes", require("./routers/notes"));
 
