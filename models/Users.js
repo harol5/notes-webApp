@@ -56,7 +56,7 @@ const updateUser = async (username, column, value) => {
       `UPDATE users SET ${column} = '${value}' WHERE username = '${username}'`
     );
   } catch (err) {
-    console.log(err);
+    throw new Error("invalid query");
   }
 };
 

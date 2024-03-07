@@ -29,6 +29,7 @@ app.use("/forgot-pwd", require("./routers/forgotPwd"));
 //------------Protected Routers---------------//
 app.use(verifyJWT);
 app.use("/notes", require("./routers/notes"));
+app.use("/users", require("./routers/users"));
 
 //-----------Error Handling--------//
 app.use(errorHandler);

@@ -4,9 +4,10 @@ import useLogout from "../hooks/useLogout";
 import { useEffect, useState } from "react";
 import Card from "../common/Card";
 import NoteModal from "../common/NoteModal";
-import "../styles/dashboard.css";
 import DeleteNoteModal from "../common/DeleteNoteModal";
 import EditNoteModal from "../common/EditNoteModal";
+import ChangeEmailModal from "../common/ChangeEmailModal";
+import "../styles/dashboard.css";
 
 function Dashboard() {
   const axiosPrivate = useAxiosPrivate();
@@ -20,6 +21,7 @@ function Dashboard() {
   const [isOpenAddNoteModal, setIsOpenAddNoteModal] = useState(false);
   const [isOpenDeleteNoteModal, setIsOpenDeleteNoteModal] = useState(false);
   const [isOpenEditNoteModal, setIsOpenEditNoteModal] = useState(false);
+  const [isOpenChangeEmailModal, setIsOpenChangeEmailModal] = useState(false);
   const [editNote, setEditNote] = useState();
   const [selectedFilter, setSelectedFilter] = useState("");
   const [isCompletedActived, setIsCompletedActived] = useState(false);
@@ -83,23 +85,12 @@ function Dashboard() {
     setIsOpenDeleteNoteModal(false);
   };
 
-  const handleCompleted = (data) => {
-    const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
-    const updatedNote = {
-      ...data,
-      date_updated: currentDate,
-      status: "completed",
-    };
+  const openModalChangeEmail = () => {
+    setIsOpenChangeEmailModal(true);
+  };
 
-    const editNote = async () => {
-      try {
-        await axiosPrivate.put(`/notes/${data.id}`, updatedNote);
-        setNoteCompleted(updatedNote);
-      } catch (err) {
-        console.log(err.response.status);
-      }
-    };
-    editNote();
+  const closeModalChangeEmail = () => {
+    setIsOpenChangeEmailModal(false);
   };
 
   //=========Filter methods
@@ -132,8 +123,24 @@ function Dashboard() {
     getNotes();
   };
 
-  console.log("this was checked");
-  console.log(noteCompleted);
+  const handleCompleted = (data) => {
+    const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
+    const updatedNote = {
+      ...data,
+      date_updated: currentDate,
+      status: "completed",
+    };
+
+    const editNote = async () => {
+      try {
+        await axiosPrivate.put(`/notes/${data.id}`, updatedNote);
+        setNoteCompleted(updatedNote);
+      } catch (err) {
+        console.log(err.response.status);
+      }
+    };
+    editNote();
+  };
 
   return (
     <section className="dashboard-container">
@@ -141,7 +148,7 @@ function Dashboard() {
         <div className="settings-wrapper">
           <h1>settings</h1>
           <ul>
-            <li>Change email</li>
+            <li onClick={openModalChangeEmail}>Change email</li>
             <li>Change password</li>
             <li>Delete account</li>
           </ul>
@@ -252,19 +259,27 @@ function Dashboard() {
           setNewNote={setNewNote}
         />
       )}
-      <DeleteNoteModal
-        isOpen={isOpenDeleteNoteModal}
-        noteId={deletedNoteId}
-        closeModal={closeModalDeleteNote}
-        notes={notes}
-        setNotes={setNotes}
-      />
+      {isOpenDeleteNoteModal && (
+        <DeleteNoteModal
+          isOpen={isOpenDeleteNoteModal}
+          noteId={deletedNoteId}
+          closeModal={closeModalDeleteNote}
+          notes={notes}
+          setNotes={setNotes}
+        />
+      )}
       {isOpenEditNoteModal && (
         <EditNoteModal
           isOpen={isOpenEditNoteModal}
           note={editNote}
           closeModal={closeModalEditNote}
           setUpdatedNotes={setNoteUpdated}
+        />
+      )}
+      {isOpenChangeEmailModal && (
+        <ChangeEmailModal
+          isOpen={isOpenChangeEmailModal}
+          closeModal={closeModalChangeEmail}
         />
       )}
     </section>

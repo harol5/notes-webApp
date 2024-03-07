@@ -1,5 +1,33 @@
-/**
- * this will control changing password, email, and forgot pwd
- */
+const Users = require("../models/Users");
+const bcrypt = require("bcrypt");
 
-console.log("soon");
+const changeUserEmail = async (req, res) => {
+  const username = req.user;
+  const newEmail = req.body.email;
+
+  try {
+    await Users.updateUser(username, "email", newEmail);
+    res.status(201).json({ message: "Email has been updated!!" });
+  } catch (err) {
+    res.sendStatus(409);
+  }
+};
+
+const changePassword = async (req, res) => {
+  const username = req.user;
+  const { password } = req.body;
+
+  try {
+    const hashedPwd = await bcrypt.hash(password, 10);
+    await Users.updateUser(username, "password", hashedPwd);
+    res.status(201).json({ message: "Password has been updated!!" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const deleteAccount = async (req, res) => {
+  const userId = parseInt(req.userId);
+};
+
+module.exports = { changeUserEmail, changePassword, deleteAccount };
