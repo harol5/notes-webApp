@@ -27,7 +27,11 @@ const changePassword = async (req, res) => {
 };
 
 const deleteAccount = async (req, res) => {
-  const userId = parseInt(req.userId);
+  const username = req.user;
+  await Users.deleteUser(username);
+
+  res.clearCookie("jwt", { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+  res.sendStatus(204);
 };
 
 module.exports = { changeUserEmail, changePassword, deleteAccount };

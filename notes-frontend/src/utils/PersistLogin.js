@@ -4,7 +4,6 @@ import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 
 function PersistLogin() {
-  console.log("PersistLogin called");
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
   const { auth } = useAuth();

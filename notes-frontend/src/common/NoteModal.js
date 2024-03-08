@@ -23,14 +23,11 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
       dateCreated: currentDate,
       status: "pending",
     };
-    console.log(data);
-    console.log(updatedNote);
 
     const addNotes = async () => {
       try {
         const newNote = await axiosPrivate.post("/notes", updatedNote);
         setNewNote(newNote.data);
-        console.log(newNote);
       } catch (err) {
         console.log(err.response.status);
       }

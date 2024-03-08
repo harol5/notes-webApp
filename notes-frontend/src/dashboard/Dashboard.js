@@ -7,6 +7,8 @@ import NoteModal from "../common/NoteModal";
 import DeleteNoteModal from "../common/DeleteNoteModal";
 import EditNoteModal from "../common/EditNoteModal";
 import ChangeEmailModal from "../common/ChangeEmailModal";
+import ChangePwdModal from "../common/ChangePwdModal";
+import DeleteAccountModal from "../common/DeleteAccountModal";
 import "../styles/dashboard.css";
 
 function Dashboard() {
@@ -22,6 +24,9 @@ function Dashboard() {
   const [isOpenDeleteNoteModal, setIsOpenDeleteNoteModal] = useState(false);
   const [isOpenEditNoteModal, setIsOpenEditNoteModal] = useState(false);
   const [isOpenChangeEmailModal, setIsOpenChangeEmailModal] = useState(false);
+  const [isOpenChangePwdModal, setIsOpenChangePwdModal] = useState(false);
+  const [isOpenDeleteAccountModal, setIsOpenDeleteAccountModal] =
+    useState(false);
   const [editNote, setEditNote] = useState();
   const [selectedFilter, setSelectedFilter] = useState("");
   const [isCompletedActived, setIsCompletedActived] = useState(false);
@@ -93,6 +98,22 @@ function Dashboard() {
     setIsOpenChangeEmailModal(false);
   };
 
+  const openModalChangePwd = () => {
+    setIsOpenChangePwdModal(true);
+  };
+
+  const closeModalChangePwd = () => {
+    setIsOpenChangePwdModal(false);
+  };
+
+  const openModalDeleteAccount = () => {
+    setIsOpenDeleteAccountModal(true);
+  };
+
+  const closeModalDeleteAccount = () => {
+    setIsOpenDeleteAccountModal(false);
+  };
+
   //=========Filter methods
   const handleFilter = (column, value) => {
     const getNotes = async () => {
@@ -149,8 +170,8 @@ function Dashboard() {
           <h1>settings</h1>
           <ul>
             <li onClick={openModalChangeEmail}>Change email</li>
-            <li>Change password</li>
-            <li>Delete account</li>
+            <li onClick={openModalChangePwd}>Change password</li>
+            <li onClick={openModalDeleteAccount}>Delete account</li>
           </ul>
         </div>
         <ul>
@@ -280,6 +301,18 @@ function Dashboard() {
         <ChangeEmailModal
           isOpen={isOpenChangeEmailModal}
           closeModal={closeModalChangeEmail}
+        />
+      )}
+      {isOpenChangePwdModal && (
+        <ChangePwdModal
+          isOpen={isOpenChangePwdModal}
+          closeModal={closeModalChangePwd}
+        />
+      )}
+      {isOpenDeleteAccountModal && (
+        <DeleteAccountModal
+          isOpen={isOpenDeleteAccountModal}
+          closeModal={closeModalDeleteAccount}
         />
       )}
     </section>

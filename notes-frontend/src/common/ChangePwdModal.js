@@ -12,12 +12,22 @@ function ChangePwdModal({ isOpen, closeModal }) {
   const axiosPrivate = useAxiosPrivate();
   const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit(async (data) => {
+    if (data.password !== data.reEnterPassword) {
+      setMsg((prev) => {
+        return {
+          ...prev,
+          type: "error",
+          message: "Passwords do not match!!",
+        };
+      });
+      return;
+    }
     try {
-      const response = await axiosPrivate.post("/users/update-email", data);
+      const response = await axiosPrivate.post("/users/update-password", data);
       setMsg({ type: "success", message: response.data.message });
       methods.reset();
     } catch (err) {
-      setMsg({ type: "error", message: "--*Invalid email--" });
+      setMsg({ type: "error", message: "--*something went wrong--" });
       return;
     }
   });
@@ -52,37 +62,25 @@ function ChangePwdModal({ isOpen, closeModal }) {
                 <div className="mt-2">
                   <span className="text-sm text-black">
                     <FormProvider {...methods}>
-                      <section className="reset-pwd-form-wrapper">
-                        <section className="call-to-action reset-pwd">
-                          <h1 className="reset-pwd">
-                            <span>NOTES</span>
-                          </h1>
-                          <p>
-                            Please enter your new password, make sure both
-                            passwords entered inside each field are the same.
-                          </p>
-                        </section>
-                        {messageFromSever && (
-                          <DisplayMessage
-                            type={messageFromSever.type}
-                            message={messageFromSever.message}
-                          />
-                        )}
-                        <form
-                          onSubmit={(e) => e.preventDefault()}
-                          noValidate
-                          className="form reset-pwd"
-                        >
-                          <InputPwd {...passwordValidation} isLoggin={false} />
-                          <InputPwd
-                            {...passwordValidation}
-                            label="Re-enter password"
-                            id="reEnterPassword"
-                            isLoggin={false}
-                          />
-                          <button onClick={onSubmit}>Reset Password</button>
-                        </form>
-                      </section>
+                      <p>
+                        Please enter your new password, make sure both passwords
+                        entered inside each field are the same.
+                      </p>
+                      {messageFromSever && (
+                        <DisplayMessage
+                          type={messageFromSever.type}
+                          message={messageFromSever.message}
+                        />
+                      )}
+                      <form onSubmit={(e) => e.preventDefault()} noValidate>
+                        <InputPwd {...passwordValidation} isLoggin={false} />
+                        <InputPwd
+                          {...passwordValidation}
+                          label="Re-enter password"
+                          id="reEnterPassword"
+                          isLoggin={false}
+                        />
+                      </form>
                     </FormProvider>
                   </span>
                 </div>

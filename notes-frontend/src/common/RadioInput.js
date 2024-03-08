@@ -3,7 +3,6 @@ import "../styles/inputForm.css";
 
 function RadioInput({ label, type, id, name, validation }) {
   const { register } = useFormContext();
-  console.log(id);
   return (
     <div className="">
       <input type={type} id={id} value={id} {...register(name)} checked />

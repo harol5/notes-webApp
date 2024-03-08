@@ -20,33 +20,32 @@ const ResetPwd = () => {
         };
       });
       return;
-    } else {
-      axios
-        .post("/forgot-pwd/reset", { ...data, token: code })
-        .then((res) => {
-          console.log(res);
+    }
+    axios
+      .post("/forgot-pwd/reset", { ...data, token: code })
+      .then((res) => {
+        console.log(res);
+        setMsg((prev) => {
+          return {
+            ...prev,
+            type: "success",
+            message: `${res.data.success}.`,
+          };
+        });
+        methods.reset();
+      })
+      .catch((err) => {
+        if (err.response.status === 409) {
           setMsg((prev) => {
             return {
               ...prev,
-              type: "success",
-              message: `${res.data.success}.`,
+              type: "error",
+              message: `${err.response.data.message}. Please try another one.`,
             };
           });
-          methods.reset();
-        })
-        .catch((err) => {
-          if (err.response.status === 409) {
-            setMsg((prev) => {
-              return {
-                ...prev,
-                type: "error",
-                message: `${err.response.data.message}. Please try another one.`,
-              };
-            });
-          }
-          console.log(err);
-        });
-    }
+        }
+        console.log(err);
+      });
   });
 
   return (

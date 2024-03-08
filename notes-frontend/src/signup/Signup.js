@@ -15,14 +15,12 @@ function Signup({ setCurrentForm }) {
   const methods = useForm({ mode: "onTouched" });
   const [messageFromSever, setMsg] = useState({ type: "", message: "" });
   const onSubmit = methods.handleSubmit((data) => {
-    console.log(data);
     axios
       .post("/register", data, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         setMsg((prev) => {
           return {
             ...prev,
@@ -31,7 +29,6 @@ function Signup({ setCurrentForm }) {
           };
         });
         methods.reset();
-        // navigate("/dashboard", { replace: true, state: "this is a test" });
       })
       .catch((err) => {
         if (err.response.status === 409) {

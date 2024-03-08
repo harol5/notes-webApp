@@ -119,6 +119,7 @@
   padding: 1em;
   width: 100%;
   height: 10em;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   row-gap: 1em;
@@ -200,6 +201,7 @@
 .settings-wrapper ul {
   display: none;
   position: absolute;
+  z-index: 2;
   min-width: 160px;
   background-color: #343434;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0);
@@ -217,4 +219,23 @@
 }
 .settings-wrapper li:hover {
   background-color: #7e7e7e5a;
+}
+
+@media (max-width: 800px) {
+  .content {
+    flex-direction: column;
+    gap: 2em;
+  }
+  .controllers {
+    position: sticky;
+    top: 5px;
+    background-color: #343434;
+    z-index: 1;
+  }
+  .switchers-container {
+    justify-content: center;
+  }
+  .switchers-container h1 {
+    font-size: 0.9em;
+  }
 }

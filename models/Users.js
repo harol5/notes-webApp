@@ -60,6 +60,14 @@ const updateUser = async (username, column, value) => {
   }
 };
 
+const deleteUser = async (username) => {
+  try {
+    await pool.query(`DELETE FROM users WHERE username = '${username}'`);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const insertVerificationToken = async (username, confirmToken) => {
   try {
     await pool.query(
@@ -88,4 +96,5 @@ module.exports = {
   updateUser,
   insertVerificationToken,
   deleteVerificationToken,
+  deleteUser,
 };

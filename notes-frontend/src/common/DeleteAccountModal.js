@@ -1,14 +1,15 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAuth from "../hooks/useAuth";
 
-function DeleteAccount({ isOpen, noteId, closeModal, notes, setNotes }) {
+function DeleteAccountModal({ isOpen, closeModal }) {
   const axiosPrivate = useAxiosPrivate();
-  const deleteNote = async () => {
+  const { setAuth } = useAuth();
+  const deleteAccount = async () => {
     try {
-      await axiosPrivate.delete(`/notes/${noteId}`);
-      const updatedNotes = notes.filter((note) => note.id !== noteId);
-      setNotes(updatedNotes);
+      await axiosPrivate.delete("users/delete-account");
+      setAuth({});
       closeModal();
     } catch (err) {
       console.log(err);
@@ -45,7 +46,7 @@ function DeleteAccount({ isOpen, noteId, closeModal, notes, setNotes }) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Are you sure you want to delete this note?
+                  Are you sure you want to delete this Account?
                 </Dialog.Title>
                 <div className="mt-2">
                   <span className="text-sm text-gray-500"></span>
@@ -62,7 +63,7 @@ function DeleteAccount({ isOpen, noteId, closeModal, notes, setNotes }) {
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={deleteNote}
+                    onClick={deleteAccount}
                   >
                     Confirm
                   </button>
@@ -76,4 +77,4 @@ function DeleteAccount({ isOpen, noteId, closeModal, notes, setNotes }) {
   );
 }
 
-export default DeleteAccount;
+export default DeleteAccountModal;

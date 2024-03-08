@@ -11,7 +11,6 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
   const onSubmit = methods.handleSubmit((data) => {
     const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
     const updatedNote = { ...note, ...data, date_updated: currentDate };
-    console.log(updatedNote);
 
     const editNote = async () => {
       try {

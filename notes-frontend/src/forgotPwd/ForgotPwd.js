@@ -10,7 +10,6 @@ const ForgotPwd = ({ setCurrentForm }) => {
   const methods = useForm({ mode: "onTouched" });
   const [messageFromSever, setMsg] = useState({ type: "", message: "" });
   const onSubmit = methods.handleSubmit((data) => {
-    console.log(data);
     axios
       .post("/forgot-pwd", data)
       .then((res) => {
@@ -48,7 +47,7 @@ const ForgotPwd = ({ setCurrentForm }) => {
       )}
       <p className="reset-pwd">
         In order to reset your password, please enter the email associated with
-        your account, you will receive an email with futher instructions.
+        your account, you will receive an email with further instructions.
       </p>
       <form onSubmit={(e) => e.preventDefault()} noValidate className="form">
         <Input {...emailValidation} />

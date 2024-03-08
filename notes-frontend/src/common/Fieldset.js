@@ -6,10 +6,8 @@ function Fieldset({ children }) {
   const {
     formState: { errors },
   } = useFormContext();
-
   const inputError = findInputError(errors, "category");
   const isInvalid = isFormInvalid(inputError);
-  console.log(errors);
   return (
     <fieldset>
       {children}

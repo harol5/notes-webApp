@@ -1,7 +1,6 @@
 const users = require("../models/Users");
 
 const logoutHandler = async (req, res) => {
-  // !!On front-end code, also delete the accessToken!!.
   //check is cookie is on req.
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(204); //no content.

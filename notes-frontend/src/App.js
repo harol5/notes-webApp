@@ -10,8 +10,6 @@ function App() {
   const [currentForm, setCurrentForm] = useState("login");
   const { auth } = useAuth();
 
-  console.log("current form:", currentForm);
-
   return auth?.code ? (
     <Navigate to="/dashboard" replace />
   ) : (
