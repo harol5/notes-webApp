@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const users = require("../models/Users");
 
 const loginHandler = async (req, res) => {
+  console.log("login endpoint is working");
   const { username, password } = req.body;
   const foundUser = await users.getUserByUsername(username);
   if (!foundUser) return res.sendStatus(401); //unauthorized
