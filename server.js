@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
 const verifyJWT = require("./middleware/verifyJWT");
-const port = process.env.PORT || 4500;
+const PORT = process.env.PORT || 4500;
 
 //-------------Middleware----------//
 app.use(cors(corsOptions));
@@ -34,6 +34,11 @@ app.use("/users", require("./routers/users"));
 //-----------Error Handling--------//
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`server listen on port: ${port}`);
+//-------All remaining requests return the React app, so it can handle routing----//
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "notes-frontend/build", "index.html"));
+});
+
+app.listen(PORT, () => {
+  console.log(`server listen on PORT: ${PORT}`);
 });

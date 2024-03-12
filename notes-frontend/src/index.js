@@ -10,6 +10,7 @@ import RequireAuth from "./utils/RequireAuth";
 import PersistLogin from "./utils/PersistLogin";
 import VerificationPanel from "./verificationPanel/VerificationPanel";
 import ResetPwd from "./resetPwd/ResetPwd";
+import NotFound from "./404/404";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/reset-pwd",
     element: <ResetPwd />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
