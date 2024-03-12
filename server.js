@@ -18,13 +18,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger);
 
 //------------Routers---------------//
-app.use("/", express.static(path.join(__dirname, "/notes-frontend/build")));
+app.use("/", express.static(path.join(__dirname, "notes-frontend/build")));
 app.use("/register", require("./routers/register"));
 app.use("/login", require("./routers/login"));
 app.use("/logout", require("./routers/logout"));
 app.use("/refresh", require("./routers/refreshToken"));
 app.use("/verify-account", require("./routers/confirmAccount"));
 app.use("/forgot-pwd", require("./routers/forgotPwd"));
+app.get("/test", (req, res) => res.send("server is working"));
 
 //------------Protected Routers---------------//
 app.use(verifyJWT);

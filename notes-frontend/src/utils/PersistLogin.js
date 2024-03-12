@@ -9,7 +9,6 @@ function PersistLogin() {
   const { auth } = useAuth();
 
   useEffect(() => {
-    console.log("PersistLogin: first useEffect called");
     const verifyRefreshToken = async () => {
       try {
         await refresh();
@@ -22,16 +21,8 @@ function PersistLogin() {
       }
     };
 
-    console.log("PersistLogin: first useEffect done");
     !auth?.code ? verifyRefreshToken() : setIsLoading(false);
   }, []);
-
-  useEffect(() => {
-    console.log("PersistLogin: second useEffect called");
-    console.log(`-----isLoadin: ${isLoading}`);
-    console.log(`-----at: ${JSON.stringify(auth?.code)}`);
-    console.log("PersistLogin: second useEffect done");
-  }, [isLoading]);
 
   return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
 }
