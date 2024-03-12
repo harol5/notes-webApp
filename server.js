@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger);
 
 //------------Routers---------------//
-app.use("/", express.static(path.join(__dirname, "/public")));
+app.use("/", express.static(path.join(__dirname, "/notes-frontend/build")));
 app.use("/register", require("./routers/register"));
 app.use("/login", require("./routers/login"));
 app.use("/logout", require("./routers/logout"));
