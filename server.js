@@ -26,18 +26,18 @@ app.use("/refresh", require("./routers/refreshToken"));
 app.use("/verify-account", require("./routers/confirmAccount"));
 app.use("/forgot-pwd", require("./routers/forgotPwd"));
 
-//-------All remaining requests return the React app, so it can handle routing----//
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "notes-frontend/build", "index.html"));
-});
-
 //------------Protected Routers---------------//
-app.use(verifyJWT);
+// app.use(verifyJWT);
 app.use("/notes", require("./routers/notes"));
 app.use("/users", require("./routers/users"));
 
 //-----------Error Handling--------//
 app.use(errorHandler);
+
+//-------All remaining requests return the React app, so it can handle routing----//
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "notes-frontend/build", "index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`server listen on PORT: ${PORT}`);
