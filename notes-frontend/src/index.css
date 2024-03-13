@@ -46,7 +46,8 @@ main {
 }
 @media (max-width: 800px) {
   main {
-    margin: 0 1em;
+    height: auto;
+    margin: 0 1em 1.5em;
     flex-direction: column;
   }
 }

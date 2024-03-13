@@ -222,6 +222,9 @@
 }
 
 @media (max-width: 800px) {
+  .dashboard-container {
+    align-self: center;
+  }
   .content {
     flex-direction: column;
     gap: 2em;
