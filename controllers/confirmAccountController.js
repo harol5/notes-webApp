@@ -21,7 +21,7 @@ const confirmAccountHandler = async (req, res) => {
 
   return res.redirect(
     301,
-    `http://localhost:3000/account-verified/${username}`
+    `${process.env.ORIGIN_URL}/account-verified/${username}`
   );
 };
 

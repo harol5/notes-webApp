@@ -38,7 +38,7 @@ const registerHandler = async (req, res) => {
       to: newUser.email,
       subject: "Confirm Account - Notes",
       text: `welcome to NOTES, click the following link to confirm you account\n 
-            http://localhost:4500/verify-account?code=${confirmToken}`,
+            ${process.env.ORIGIN_URL}/verify-account?code=${confirmToken}`,
     });
 
     res.status(201).json({ success: `New user ${newUser.username} created!` });

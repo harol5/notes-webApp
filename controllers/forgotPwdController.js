@@ -23,7 +23,7 @@ const forgotPwdHandler = async (req, res) => {
       to: email,
       subject: "Request: change password - Notes",
       text: `Please click on the following link to change your password:\n 
-                http://localhost:3000/reset-pwd?code=${resetPwdToken}`,
+            ${process.env.ORIGIN_URL}/reset-pwd?code=${resetPwdToken}`,
     });
   }
 
