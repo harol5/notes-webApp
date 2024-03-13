@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 
 function PersistLogin() {
+  console.log("persisten");
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
   const { auth } = useAuth();
@@ -12,12 +13,10 @@ function PersistLogin() {
     const verifyRefreshToken = async () => {
       try {
         await refresh();
-        console.log("refresh() returned");
       } catch (err) {
         console.log(err);
       } finally {
         setIsLoading(false);
-        console.log("finally block ran!!");
       }
     };
 
