@@ -7,7 +7,6 @@ const corsOptions = require("./config/corsOptions");
 const cookieParser = require("cookie-parser");
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
-const verifyJWT = require("./middleware/verifyJWT");
 const PORT = process.env.PORT || 4500;
 
 //-------------Middleware----------//
@@ -27,7 +26,6 @@ app.use("/verify-account", require("./routers/confirmAccount"));
 app.use("/forgot-pwd", require("./routers/forgotPwd"));
 
 //------------Protected Routers---------------//
-// app.use(verifyJWT);
 app.use("/notes", require("./routers/notes"));
 app.use("/users", require("./routers/users"));
 

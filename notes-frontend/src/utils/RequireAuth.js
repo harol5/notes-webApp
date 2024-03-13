@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 const RequireAuth = () => {
   const { auth } = useAuth();
   const location = useLocation();
-  console.log("requireAuth:", auth);
+  console.log("requireAuth");
 
   return auth?.code ? (
     <Outlet />

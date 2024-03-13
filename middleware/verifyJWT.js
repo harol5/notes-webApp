@@ -3,8 +3,7 @@ require("dotenv").config();
 
 const verifyJWT = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
-  if (!authHeader?.startsWith("Bearer"))
-    res.status(401).send("no auth code on header");
+  if (!authHeader?.startsWith("Bearer")) res.sendStatus(401);
 
   //removing "Bearer" from token.
   const token = authHeader.split(" ")[1];
