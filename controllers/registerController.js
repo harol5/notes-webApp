@@ -30,7 +30,7 @@ const registerHandler = async (req, res) => {
       date: date_created,
       active: false,
     };
-    await users.insertNewUser(newUserWithHashedPwd);
+    const dbRes = await users.insertNewUser(newUserWithHashedPwd);
     await users.insertVerificationToken(newUser.username, confirmToken);
 
     await transporter.sendMail({
@@ -41,7 +41,12 @@ const registerHandler = async (req, res) => {
             ${process.env.ORIGIN_URL}/verify-account?code=${confirmToken}`,
     });
 
-    res.status(201).json({ success: `New user ${newUser.username} created!` });
+    res
+      .status(201)
+      .json({
+        success: `New user ${newUser.username} created!`,
+        databaseRes: dbRes,
+      });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
