@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 import InputPwd from "../common/InputFormPw";
 import axios from "../api/axios";
 import { passwordValidation } from "../utils/inputValidations";
@@ -48,7 +49,7 @@ const ResetPwd = () => {
       });
   });
 
-  return (
+  return code ? (
     <FormProvider {...methods}>
       <section className="reset-pwd-form-wrapper">
         <section className="call-to-action reset-pwd">
@@ -82,6 +83,8 @@ const ResetPwd = () => {
         </form>
       </section>
     </FormProvider>
+  ) : (
+    <Navigate to="/" replace={true} />
   );
 };
 

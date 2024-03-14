@@ -13,7 +13,7 @@ const registerHandler = async (req, res) => {
 
   if (isEmailTaken)
     return res.status(409).json({
-      message: `there is an account associated with ${newUser.email} \n You must provide a different email.`,
+      message: `there is an account associated with ${newUser.email}`,
     });
 
   try {
