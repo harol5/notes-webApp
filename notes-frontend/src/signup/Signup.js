@@ -21,6 +21,7 @@ function Signup({ setCurrentForm }) {
         withCredentials: true,
       })
       .then((res) => {
+        console.log(res);
         setMsg((prev) => {
           return {
             ...prev,
