@@ -14,7 +14,6 @@ const confirmAccountHandler = async (req, res) => {
 
   const user = await Users.getUserByUsername(username);
   if (!user) return res.status(409).json({ message: "not valid" }); //conflit with token
-  console.log(user);
 
   await Users.updateUser(username, "active", true);
   await Users.deleteVerificationToken(username);

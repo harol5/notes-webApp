@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 const VerificationPanel = ({}) => {
   const { username } = useParams();
   return (
-    <div>
+    <div className="verification-wrapper">
       <h1 className="success">Hello {username},</h1>
       <p>
         your account have been <b className="success">confirmed</b>. you can

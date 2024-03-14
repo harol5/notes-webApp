@@ -25,7 +25,6 @@ const ResetPwd = () => {
     axios
       .post("/forgot-pwd/reset", { ...data, token: code })
       .then((res) => {
-        console.log(res);
         setMsg((prev) => {
           return {
             ...prev,

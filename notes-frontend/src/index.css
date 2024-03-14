@@ -50,4 +50,8 @@ main {
     margin: 0 1em 1.5em;
     flex-direction: column;
   }
+
+  .verification-wrapper {
+    margin: 40% 0 0;
+  }
 }
