@@ -7,8 +7,6 @@ const confirmAccountHandler = async (req, res) => {
   let username;
   jwt.verify(token, process.env.CONFIRM_TOKEN_SECRET, (err, decoded) => {
     if (err) return res.sendStatus(403); //invalid token.
-
-    console.log(decoded.UserInfo.username);
     username = decoded.UserInfo.username;
   });
 
