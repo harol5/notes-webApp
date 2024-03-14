@@ -40,6 +40,7 @@ function Dashboard() {
         const response = await axiosPrivate.get("/notes", {
           signal: controller.signal,
         });
+        console.log(response);
         isMounted && setNotes(response.data);
         setSelectedFilter("");
       } catch (err) {
@@ -121,7 +122,6 @@ function Dashboard() {
         const { data: notes } = await axiosPrivate.get(
           `/notes?${column}=${value}`
         );
-        console.log(value);
         setSelectedFilter(value);
         setNotes(notes);
       } catch (err) {

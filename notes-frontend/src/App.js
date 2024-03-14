@@ -7,7 +7,6 @@ import useAuth from "./hooks/useAuth";
 import { Navigate } from "react-router-dom";
 
 function App() {
-  console.log("app");
   const [currentForm, setCurrentForm] = useState("login");
   const { auth } = useAuth();
 
