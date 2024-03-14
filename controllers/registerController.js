@@ -7,8 +7,14 @@ const registerHandler = async (req, res) => {
   //front-end code MUST validate inputs before sending request to this endpoint.
   const newUser = req.body;
   const isUsernameTaken = await users.getUserByUsername(newUser.username);
+  const isEmailTaken = await users.getUserByEmail(newUser.email);
   if (isUsernameTaken)
     return res.status(409).json({ message: "username not available" });
+
+  if (isEmailTaken)
+    return res.status(409).json({
+      message: `there is an account associated with ${newUser.email} \n You must provide a different email.`,
+    });
 
   try {
     const hashedPwd = await bcrypt.hash(newUser.password, 10);
@@ -30,7 +36,7 @@ const registerHandler = async (req, res) => {
       date: date_created,
       active: false,
     };
-    const dbRes = await users.insertNewUser(newUserWithHashedPwd);
+    await users.insertNewUser(newUserWithHashedPwd);
     await users.insertVerificationToken(newUser.username, confirmToken);
 
     await transporter.sendMail({
@@ -41,12 +47,9 @@ const registerHandler = async (req, res) => {
             ${process.env.ORIGIN_URL}/verify-account?code=${confirmToken}`,
     });
 
-    res
-      .status(201)
-      .json({
-        success: `New user ${newUser.username} created!`,
-        databaseRes: dbRes,
-      });
+    res.status(201).json({
+      success: `New user ${newUser.username} created!`,
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
