@@ -123,10 +123,13 @@ function Dashboard() {
         const { data: notes } = await axiosPrivate.get(
           `/notes?${column}=${value}`
         );
+        console.log("testttttttt");
         setSelectedFilter(value);
         setNotes(notes);
       } catch (err) {
         console.log(err);
+        if (err.response.status === 404) setSelectedFilter("");
+        console.log(err.response.status);
       }
     };
     getNotes();
