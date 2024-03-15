@@ -29,7 +29,7 @@ function Dashboard() {
     useState(false);
   const [editNote, setEditNote] = useState();
   const [selectedFilter, setSelectedFilter] = useState("");
-  const [isCompletedActived, setIsCompletedActived] = useState(false);
+  const [currentNotesDisplayed, setCurrentNotesDisplayed] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -40,11 +40,12 @@ function Dashboard() {
         const response = await axiosPrivate.get("/notes", {
           signal: controller.signal,
         });
-        console.log(response);
         isMounted && setNotes(response.data);
         setSelectedFilter("");
+        setCurrentNotesDisplayed("pending");
       } catch (err) {
-        console.log(err);
+        if (err.response.status === 404) setCurrentNotesDisplayed("empty");
+        console.log(err.response.status);
       }
     };
     getNotes();
@@ -229,19 +230,23 @@ function Dashboard() {
         <section className="notes-main">
           <div className="switchers-container">
             <h1
-              className={!isCompletedActived ? "inprogress-actived" : ""}
-              onClick={() => setIsCompletedActived(false)}
+              className={
+                currentNotesDisplayed === "pending" ? "inprogress-actived" : ""
+              }
+              onClick={() => setCurrentNotesDisplayed("pending")}
             >
               in progress
             </h1>
             <h1
-              className={isCompletedActived ? "completed-actived" : ""}
-              onClick={() => setIsCompletedActived(true)}
+              className={
+                currentNotesDisplayed === "completed" ? "completed-actived" : ""
+              }
+              onClick={() => setCurrentNotesDisplayed("completed")}
             >
               completed
             </h1>
           </div>
-          {!isCompletedActived && (
+          {currentNotesDisplayed === "pending" && (
             <section className="notes-container">
               {notes
                 .filter((note) => note.status === "pending")
@@ -256,7 +261,7 @@ function Dashboard() {
                 ))}
             </section>
           )}
-          {isCompletedActived && (
+          {currentNotesDisplayed === "completed" && (
             <section className="notes-container">
               {notes
                 .filter((note) => note.status === "completed")
@@ -269,6 +274,11 @@ function Dashboard() {
                     onComplete={handleCompleted}
                   />
                 ))}
+            </section>
+          )}
+          {currentNotesDisplayed === "empty" && (
+            <section className="notes-container">
+              <h1>no notes to display</h1>
             </section>
           )}
         </section>
