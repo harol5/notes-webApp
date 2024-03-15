@@ -278,7 +278,7 @@ function Dashboard() {
           )}
           {currentNotesDisplayed === "empty" && (
             <section className="notes-container">
-              <h1 className="empty-notes-message">no notes to display</h1>
+              <h1 className="empty-notes-message">your notes are empty</h1>
             </section>
           )}
         </section>

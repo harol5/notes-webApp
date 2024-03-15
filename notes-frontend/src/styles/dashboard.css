@@ -1,5 +1,5 @@
 .dashboard-container {
-  flex-basis: 100%;
+  width: 100%;
   align-self: flex-start;
 }
 .dashboard-container header {
@@ -228,6 +228,7 @@
 @media (max-width: 800px) {
   .dashboard-container {
     align-self: center;
+    width: 100%;
   }
   .content {
     flex-direction: column;
