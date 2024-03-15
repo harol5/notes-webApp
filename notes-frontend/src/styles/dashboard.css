@@ -109,9 +109,13 @@
 
 .notes-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1em;
   flex-wrap: wrap;
+}
+
+.empty-notes-message {
+  margin: 4em auto;
 }
 
 .card {
@@ -240,5 +244,9 @@
   }
   .switchers-container h1 {
     font-size: 0.9em;
+  }
+  .empty-notes-message {
+    width: 90vw;
+    text-align: center;
   }
 }
