@@ -3,7 +3,7 @@ const pool = require("../config/postgres");
 const getUserByUsername = async (username) => {
   try {
     const result = await pool.query(
-      `SELECT * FROM users WHERE username = ${username}`
+      `SELECT * FROM users WHERE username = '${username}'`
     );
     return result.rows[0];
   } catch (err) {
