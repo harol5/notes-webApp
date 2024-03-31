@@ -2,20 +2,20 @@ const pool = require("../config/postgres");
 
 const getUserByUsername = async (username) => {
   try {
-    const result = await pool.query(
-      `SELECT * FROM users WHERE username = '${username}'`
-    );
+    const result = await pool.query("SELECT * FROM users WHERE username = $1", [
+      username,
+    ]);
     return result.rows[0];
   } catch (err) {
-    console.log(err);
+    console.log("login query error:", err);
   }
 };
 
 const getUserByEmail = async (email) => {
   try {
-    const result = await pool.query(
-      `SELECT * FROM users WHERE email = '${email}'`
-    );
+    const result = await pool.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
     return result.rows[0];
   } catch (err) {
     console.log(err);
@@ -25,7 +25,8 @@ const getUserByEmail = async (email) => {
 const getUserByRefreshToken = async (refreshToken) => {
   try {
     const result = await pool.query(
-      `SELECT * FROM users WHERE refresh_token = '${refreshToken}'`
+      "SELECT * FROM users WHERE refresh_token = $1",
+      [refreshToken]
     );
     return result.rows[0];
   } catch (err) {
@@ -43,7 +44,8 @@ const insertNewUser = async ({
 }) => {
   try {
     await pool.query(
-      `INSERT INTO users(name,email,username,password,date_created,active) VALUES('${name}','${email}','${username}','${password}','${date}',${active})`
+      `INSERT INTO users(name,email,username,password,date_created,active) VALUES($1,$2,$3,$4,$5,$6)`,
+      [name, email, username, password, date, active]
     );
   } catch (err) {
     console.log(err);
@@ -52,9 +54,11 @@ const insertNewUser = async ({
 
 const updateUser = async (username, column, value) => {
   try {
-    await pool.query(
-      `UPDATE users SET ${column} = '${value}' WHERE username = '${username}'`
-    );
+    await pool.query("UPDATE users SET $1 = $2 WHERE username = $3", [
+      column,
+      value,
+      username,
+    ]);
   } catch (err) {
     throw new Error("invalid query");
   }
@@ -62,7 +66,7 @@ const updateUser = async (username, column, value) => {
 
 const deleteUser = async (username) => {
   try {
-    await pool.query(`DELETE FROM users WHERE username = '${username}'`);
+    await pool.query("DELETE FROM users WHERE username = $1", [username]);
   } catch (err) {
     console.log(err);
   }
@@ -71,7 +75,8 @@ const deleteUser = async (username) => {
 const insertVerificationToken = async (username, confirmToken) => {
   try {
     await pool.query(
-      `INSERT INTO verificationtokens(username,token) VALUES('${username}','${confirmToken}')`
+      `INSERT INTO verificationtokens(username,token) VALUES($1,$2)`,
+      [username, confirmToken]
     );
   } catch (err) {
     console.log(err);
@@ -80,9 +85,9 @@ const insertVerificationToken = async (username, confirmToken) => {
 
 const deleteVerificationToken = async (username) => {
   try {
-    await pool.query(
-      `DELETE FROM verificationtokens WHERE username = '${username}'`
-    );
+    await pool.query("DELETE FROM verificationtokens WHERE username = $1", [
+      username,
+    ]);
   } catch (err) {
     console.log(err);
   }

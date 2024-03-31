@@ -2,9 +2,9 @@ const pool = require("../config/postgres");
 
 const getAllNotesByUserId = async (userId) => {
   try {
-    const result = await pool.query(
-      `SELECT * FROM notes WHERE user_id = ${userId}`
-    );
+    const result = await pool.query("SELECT * FROM notes WHERE user_id = $1", [
+      userId,
+    ]);
     return result.rows;
   } catch (err) {
     console.log(err);
@@ -20,13 +20,15 @@ const createNote = async ({
   userId,
 }) => {
   await pool.query(
-    `INSERT INTO notes(title,category,date_created,content,user_id,status) VALUES('${title}','${category}','${dateCreated}','${content}',${userId},'${status}')`
+    "INSERT INTO notes(title,category,date_created,content,user_id,status) VALUES($1,$2,$3,$4,$5,$6)",
+    [title, category, dateCreated, content, userId, status]
   );
 };
 
 const getNoteById = async (userId, noteId) => {
   const result = await pool.query(
-    `SELECT * FROM notes WHERE user_id = ${userId} AND id = ${noteId}`
+    "SELECT * FROM notes WHERE user_id = $1 AND id = $2",
+    [userId, noteId]
   );
   return result.rows;
 };
@@ -41,14 +43,16 @@ const updateNoteById = async ({
   status,
 }) => {
   const result = await pool.query(
-    `UPDATE notes SET title = '${title}', category = '${category}', date_updated = '${date_updated}', content = '${content}', status = '${status}' WHERE user_id = ${userId} and id = ${noteId}`
+    `UPDATE notes SET title = $1, category = $2, date_updated = $3, content = $4, status = $5 WHERE user_id = $6 and id = $7`,
+    [title, category, date_updated, content, status, userId, noteId]
   );
   return result;
 };
 
 const deleteNoteById = async (userId, noteId) => {
   const result = await pool.query(
-    `DELETE FROM notes WHERE user_id = ${userId} AND id = ${noteId}`
+    "DELETE FROM notes WHERE user_id = $1 AND id = $2",
+    [userId, noteId]
   );
   return result;
 };
@@ -56,7 +60,8 @@ const deleteNoteById = async (userId, noteId) => {
 const filterNotesBy = async (userId, column, value) => {
   try {
     const result = await pool.query(
-      `SELECT * FROM notes WHERE ${column} = '${value}' and user_id = '${userId}';`
+      `SELECT * FROM notes WHERE $1 = $2 and user_id = $3`,
+      [column, value, userId]
     );
     return result.rows;
   } catch (err) {

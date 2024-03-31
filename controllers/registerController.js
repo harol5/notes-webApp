@@ -8,6 +8,7 @@ const registerHandler = async (req, res) => {
   const newUser = req.body;
   const isUsernameTaken = await users.getUserByUsername(newUser.username);
   const isEmailTaken = await users.getUserByEmail(newUser.email);
+
   if (isUsernameTaken)
     return res.status(409).json({ message: "username not available" });
 
