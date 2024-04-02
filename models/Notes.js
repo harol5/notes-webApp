@@ -1,4 +1,5 @@
 const pool = require("../config/postgres");
+const format = require("pg-format");
 
 const getAllNotesByUserId = async (userId) => {
   try {
@@ -59,10 +60,13 @@ const deleteNoteById = async (userId, noteId) => {
 
 const filterNotesBy = async (userId, column, value) => {
   try {
-    const result = await pool.query(
-      `SELECT * FROM notes WHERE $1 = $2 and user_id = $3`,
-      [column, value, userId]
+    const sql = format(
+      "SELECT * FROM notes WHERE %I = %L and user_id = %L",
+      column,
+      value,
+      userId
     );
+    const result = await pool.query(sql);
     return result.rows;
   } catch (err) {
     console.log(err);

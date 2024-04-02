@@ -1,10 +1,10 @@
 const pool = require("../config/postgres");
+const format = require("pg-format");
 
 const getUserByUsername = async (username) => {
   try {
-    const result = await pool.query(
-      `SELECT * FROM users WHERE username = '${username}'`
-    );
+    const sql = format("SELECT * FROM users WHERE username = %L", username);
+    const result = await pool.query(sql);
     return result.rows[0];
   } catch (err) {
     console.log("login query error:", err);
@@ -13,9 +13,8 @@ const getUserByUsername = async (username) => {
 
 const getUserByEmail = async (email) => {
   try {
-    const result = await pool.query("SELECT * FROM users WHERE email = $1", [
-      email,
-    ]);
+    const sql = format("SELECT * FROM users WHERE email = %L", email);
+    const result = await pool.query(sql);
     return result.rows[0];
   } catch (err) {
     console.log(err);
@@ -24,10 +23,11 @@ const getUserByEmail = async (email) => {
 
 const getUserByRefreshToken = async (refreshToken) => {
   try {
-    const result = await pool.query(
-      "SELECT * FROM users WHERE refresh_token = $1",
-      [refreshToken]
+    const sql = format(
+      "SELECT * FROM users WHERE refresh_token = %L",
+      refreshToken
     );
+    const result = await pool.query(sql);
     return result.rows[0];
   } catch (err) {
     console.log(err);
@@ -43,10 +43,16 @@ const insertNewUser = async ({
   active,
 }) => {
   try {
-    await pool.query(
-      `INSERT INTO users(name,email,username,password,date_created,active) VALUES($1,$2,$3,$4,$5,$6)`,
-      [name, email, username, password, date, active]
+    const sql = format(
+      "INSERT INTO users(name,email,username,password,date_created,active) VALUES(%L,%L,%L,%L,%L,%L)",
+      name,
+      email,
+      username,
+      password,
+      date,
+      active
     );
+    await pool.query(sql);
   } catch (err) {
     console.log(err);
   }
@@ -54,11 +60,13 @@ const insertNewUser = async ({
 
 const updateUser = async (username, column, value) => {
   try {
-    await pool.query("UPDATE users SET $1 = $2 WHERE username = $3", [
+    const sql = format(
+      "UPDATE users SET %I = %L WHERE username = %L",
       column,
       value,
-      username,
-    ]);
+      username
+    );
+    await pool.query(sql);
   } catch (err) {
     throw new Error("invalid query");
   }
@@ -66,7 +74,8 @@ const updateUser = async (username, column, value) => {
 
 const deleteUser = async (username) => {
   try {
-    await pool.query("DELETE FROM users WHERE username = $1", [username]);
+    const sql = format("DELETE FROM users WHERE username = %L", username);
+    await pool.query(sql);
   } catch (err) {
     console.log(err);
   }
@@ -74,10 +83,12 @@ const deleteUser = async (username) => {
 
 const insertVerificationToken = async (username, confirmToken) => {
   try {
-    await pool.query(
-      `INSERT INTO verificationtokens(username,token) VALUES($1,$2)`,
-      [username, confirmToken]
+    const sql = format(
+      "INSERT INTO verificationtokens(username,token) VALUES(%L,%L)",
+      username,
+      confirmToken
     );
+    await pool.query(sql);
   } catch (err) {
     console.log(err);
   }
@@ -85,9 +96,11 @@ const insertVerificationToken = async (username, confirmToken) => {
 
 const deleteVerificationToken = async (username) => {
   try {
-    await pool.query("DELETE FROM verificationtokens WHERE username = $1", [
-      username,
-    ]);
+    const sql = format(
+      "DELETE FROM verificationtokens WHERE username = %L",
+      username
+    );
+    await pool.query(sql);
   } catch (err) {
     console.log(err);
   }
