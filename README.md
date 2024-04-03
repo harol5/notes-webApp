@@ -20,3 +20,4 @@ NOTES is a web application where users can create notes. My intention was to cre
 - Node.js
 - Express.js
 - PostgreSQL
+- Heroku
