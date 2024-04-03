@@ -192,6 +192,16 @@
   background-color: rgb(249, 250, 251);
 }
 
+.category-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.category-wrapper select {
+  width: 120px;
+}
+
 /*======dropdown setting menu*/
 .settings-wrapper {
   position: relative;

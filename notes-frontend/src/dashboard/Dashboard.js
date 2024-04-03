@@ -123,7 +123,6 @@ function Dashboard() {
         const { data: notes } = await axiosPrivate.get(
           `/notes?${column}=${value}`
         );
-        console.log("testttttttt");
         setSelectedFilter(value);
         setNotes(notes);
       } catch (err) {

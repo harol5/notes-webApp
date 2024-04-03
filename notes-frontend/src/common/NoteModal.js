@@ -15,8 +15,6 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
   const methods = useForm({ mode: "onTouched" });
   const onSubmit = methods.handleSubmit((data) => {
     //ISSUE: form is not returning all data (category:null);
-    console.log(data);
-
     const currentDate = new Date().toString().split(" ").slice(0, 5).join(" ");
     const updatedNote = {
       ...data,
@@ -33,7 +31,6 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
       }
     };
     addNotes();
-
     closeModal();
     methods.reset();
   });
@@ -52,7 +49,6 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
         >
           <div className="fixed inset-0 bg-black/50" />
         </Transition.Child>
-
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
@@ -74,32 +70,20 @@ function NoteModal({ isOpen, closeModal, setNewNote }) {
                       <form onSubmit={(e) => e.preventDefault()} noValidate>
                         <Input {...titleNoteValidation} />
                         <Textarea {...contentNoteValidation} />
-                        <Fieldset>
-                          <div className="">
-                            <input
-                              type="radio"
-                              id="field-todo"
-                              value="todo"
-                              {...methods.register("category")}
-                              checked
-                            />
-                            <label htmlFor="field-todo">todo</label>
-                          </div>
-                          <div className="">
-                            <input
-                              type="radio"
-                              id="field-reminder"
-                              value="reminder"
-                              {...methods.register("category")}
-                            />
-                            <label htmlFor="field-reminder">reminder</label>
-                          </div>
-                        </Fieldset>
+                        <div className="category-wrapper">
+                          <label htmlFor="category-select">Category:</label>
+                          <select
+                            id="category-select"
+                            {...methods.register("category")}
+                          >
+                            <option value="todo">todo</option>
+                            <option value="reminder">reminder</option>
+                          </select>
+                        </div>
                       </form>
                     </FormProvider>
                   </span>
                 </div>
-
                 <div className="mt-4">
                   <button
                     type="button"

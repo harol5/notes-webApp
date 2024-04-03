@@ -40,7 +40,6 @@ const editNoteHandler = async (req, res) => {
   const userId = parseInt(req.userId);
   const noteId = parseInt(req.params.id);
   const updatedNote = { ...req.body, userId, noteId };
-  console.log(updatedNote);
   try {
     const { rowCount } = await Notes.updateNoteById(updatedNote);
     if (rowCount === 0) return res.sendStatus(404);

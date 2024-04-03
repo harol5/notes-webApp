@@ -17,7 +17,7 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
         await axiosPrivate.put(`/notes/${note.id}`, updatedNote);
         setUpdatedNotes(updatedNote);
       } catch (err) {
-        console.log(err.response.status);
+        console.log(err);
       }
     };
     editNote();
@@ -124,27 +124,32 @@ function EditNoteModal({ isOpen, note, closeModal, setUpdatedNotes }) {
                             );
                           }}
                         />
-                        <Fieldset>
-                          <div className="">
-                            <input
-                              type="radio"
-                              id="todo"
-                              value="todo"
-                              {...methods.register("category")}
-                              checked
-                            />
-                            <label htmlFor="todo">todo</label>
-                          </div>
-                          <div className="">
-                            <input
-                              type="radio"
-                              id="reminder"
-                              value="reminder"
-                              {...methods.register("category")}
-                            />
-                            <label htmlFor="reminder">reminder</label>
-                          </div>
-                        </Fieldset>
+                        <Controller
+                          control={methods.control}
+                          name="category"
+                          defaultValue={note?.category}
+                          render={({
+                            field: { onChange, onBlur, value, name },
+                          }) => {
+                            return (
+                              <div className="category-wrapper">
+                                <label htmlFor="category-select">
+                                  Category:
+                                </label>
+                                <select
+                                  id="category-select"
+                                  onBlur={onBlur}
+                                  onChange={onChange}
+                                  name={name}
+                                  value={value}
+                                >
+                                  <option value="todo">todo</option>
+                                  <option value="reminder">reminder</option>
+                                </select>
+                              </div>
+                            );
+                          }}
+                        />
                       </form>
                     </FormProvider>
                   </span>
